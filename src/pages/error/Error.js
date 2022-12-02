@@ -1,4 +1,5 @@
 import template from './error.tmpl.hbs';
+import './error.styles.css';
 
 const data = {
   code: '404',
