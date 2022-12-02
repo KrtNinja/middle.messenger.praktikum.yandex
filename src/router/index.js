@@ -5,7 +5,7 @@ const renderDOM = (page) => {
   root.innerHTML = page();
 };
 
-const index = () => {
+const router = () => {
   const { pathname } = document.location;
   const page = routes[pathname];
 
@@ -18,7 +18,7 @@ const index = () => {
   renderDOM(page);
 };
 
-window.addEventListener('load', index);
-window.addEventListener('hashchange', index);
+window.addEventListener('load', router);
+window.addEventListener('hashchange', router);
 
-window.removeEventListener('unload', index);
+window.removeEventListener('unload', router);

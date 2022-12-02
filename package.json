@@ -2,9 +2,11 @@
   "name": "middle.messenger.praktikum.yandex",
   "version": "1.0.0",
   "description": "Loud Whisper - Messenger application",
+  "type": "module",
   "scripts": {
-    "dev": "parcel -p 3000 public/index.html",
-    "build": "parcel build public/index.html"
+    "dev": "parcel -p 3000 public/index.html --no-cache",
+    "build": "parcel build public/index.html",
+    "start": "npm run build && node server.js"
   },
   "repository": {
     "type": "git",
