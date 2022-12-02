@@ -1,0 +1,32 @@
+/* Reset CSS */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Default body settings */
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
+/* Remove default ul and ol styles*/
+ul[class],
+ol[class] {
+    list-style: none;
+    padding: 0;
+}
+
+/* Remove margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul[class],
+ol[class],
+li {
+    margin: 0;
+}
