@@ -1,4 +1,3 @@
-import { sum } from './modules/sum';
+import App from './App.hbs';
 
-const root = document.querySelector('#root');
-root.textContent = sum(6, -1).toString();
+document.getElementById('root').innerHTML = App({ id: '123', text: 'I\'m text from hbs' });
