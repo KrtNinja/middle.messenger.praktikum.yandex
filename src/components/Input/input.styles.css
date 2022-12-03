@@ -1,0 +1,33 @@
+.LWInput {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+
+.LWInput input {
+    width: 100%;
+    padding: var(--s1) 0;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid var(--grey);
+    color: var(--white);
+}
+
+.LWInput input:focus-visible {
+    border-bottom: 1px solid var(--primary);
+}
+
+.LWInput .input--error {
+    border-bottom: 1px solid var(--error);
+}
+
+.LWInput .input--error:focus-visible {
+    border-bottom: 1px solid var(--error);
+}
+
+
+.LWInput p {
+    margin-top: 4px;
+}

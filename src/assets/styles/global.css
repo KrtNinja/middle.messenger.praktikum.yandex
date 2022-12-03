@@ -1,3 +1,13 @@
 .pointer {
     cursor: pointer;
 }
+
+.error--text {
+    color: var(--error);
+}
+.grey--text {
+    color: var(--grey);
+}
+.subtitle {
+    font-size: 12px;
+}
