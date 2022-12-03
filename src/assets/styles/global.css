@@ -1,6 +1,12 @@
 .pointer {
     cursor: pointer;
 }
+.paper {
+    display: flex;
+    box-shadow: var(--bs-primary);
+    background-color: var(--bg-paper);
+    height: min-content;
+}
 
 .error--text {
     color: var(--error);
