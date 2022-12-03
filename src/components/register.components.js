@@ -1,3 +1,5 @@
-import { LayoutRegister } from './Layout/Layout.js';
+import { registerLayout } from './Layout/Layout.js';
+import { registerButton } from './Button/Button.js';
 
-LayoutRegister();
+registerLayout();
+registerButton();

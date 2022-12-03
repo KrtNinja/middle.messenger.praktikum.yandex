@@ -1,0 +1,22 @@
+.LWButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    min-height: var(--s3);
+    border-radius: var(--s1);
+    color: var(--white);
+    background-color: var(--primary);
+    transform: scale(1);
+    box-shadow: var(--bs-primary);
+    padding: var(--s1);
+    max-width: 270px;
+}
+
+.LWButton:active {
+    transform: scale(0.95);
+}
+
+.LWButton__text {
+    padding: 0 70px;
+}

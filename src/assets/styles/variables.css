@@ -12,4 +12,7 @@
     --s2: 16px;
     --s3: 24px;
     --s4: 32px;
+
+    /* Styles */
+    --bs-primary: 0 2px 7px -1px var(--primary);
 }
