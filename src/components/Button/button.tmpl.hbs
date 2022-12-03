@@ -1,6 +1,6 @@
-<button class='LWButton pointer'>
-  {{#if textButton}}
-    <p class='LWButton__text'>{{textButton}}</p>
+<button class='LWButton pointer {{classes}}'>
+  {{#if buttonText}}
+    <p class='LWButton__text'>{{buttonText}}</p>
   {{/if}}
   {{#if @partial-block}}
     {{>@partial-block}}

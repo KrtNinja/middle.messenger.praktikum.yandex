@@ -5,12 +5,28 @@
     border: none;
     min-height: var(--s3);
     border-radius: var(--s1);
-    color: var(--white);
-    background-color: var(--primary);
     transform: scale(1);
-    box-shadow: var(--bs-primary);
     padding: var(--s1);
     max-width: 270px;
+}
+
+.LWButton--white {
+    color: var(--white);
+}
+.LWButton--primary {
+    color: var(--primary);
+}
+.LWButton--error {
+    color: var(--error);
+}
+
+.LWButton--contained {
+    box-shadow: var(--bs-primary);
+    background-color: var(--primary);
+}
+
+.LWButton--text {
+    background-color: transparent;
 }
 
 .LWButton:active {
