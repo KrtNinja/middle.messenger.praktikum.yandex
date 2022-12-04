@@ -9,5 +9,8 @@ const data = {
 };
 
 export const Error = (props = {}) => {
-  return template(Object.assign(data, props));
+  const finalProps = Object.assign(data, props);
+  finalProps.onClick = `location.href = "${finalProps.backUrl}"`;
+
+  return template(finalProps);
 };

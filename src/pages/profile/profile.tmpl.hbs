@@ -28,7 +28,12 @@
     <div class='profile__actions'>
       {{>LWButton variant='text' color='primary' buttonText='Изменить данные' }}
       {{>LWButton variant='text' color='primary' buttonText='Изменить пароль' }}
-      {{>LWButton variant='text' color='error' buttonText='Выйти' }}
+      {{>LWButton
+        variant='text'
+        color='error'
+        buttonText='Выйти'
+        onClick='location.href = "/login"'
+      }}
     </div>
   </div>
 {{/Layout}}

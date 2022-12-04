@@ -2,6 +2,12 @@
   <div class='error-page'>
     <h1>{{code}}</h1>
     <h2>{{message}}</h2>
-    <a href="{{backUrl}}">{{linkText}}</a>
+    {{>LWButton
+      variant='text'
+      color='primary'
+      size='small'
+      buttonText=linkText
+      onClick=onClick
+    }}
   </div>
 {{/Layout}}

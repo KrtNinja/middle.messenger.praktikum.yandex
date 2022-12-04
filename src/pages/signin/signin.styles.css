@@ -17,3 +17,9 @@
     width: 100%;
     overflow: auto;
 }
+
+.signin__actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
