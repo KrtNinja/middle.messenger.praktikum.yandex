@@ -1,0 +1,26 @@
+{{#>Layout}}
+  <div class='paper'>
+    <div class='signin'>
+      <h2>Регистрация</h2>
+      <form id='signin-form' action='' method='post' class='signin__form'>
+        {{>LWInput name='email' type='email' label='Почта' value='pochta@yandex.ru'}}
+        {{>LWInput name='login' label='Логин' value='ivanovivan'}}
+        {{>LWInput name='first_name' label='Имя' value='Иван'}}
+        {{>LWInput name='second_name' label='Фамилия' value='Иванов'}}
+        {{>LWInput name='phone' label='Телефон' value='+79991237575'}}
+        {{>LWInput name='password' type='password' label='Пароль' value='admin1234'}}
+        {{>LWInput name='repaeat-password' type='password' label='Повторите пароль' value='admin1234'}}
+      </form>
+      <div class='signin__actions'>
+        {{>LWButton buttonText='Зарегистрироваться'}}
+        {{>LWButton
+          variant='text'
+          color='primary'
+          size='small'
+          buttonText='Войти'
+          onClick='location.href = "/login"'
+        }}
+      </div>
+    </div>
+  </div>
+{{/Layout}}

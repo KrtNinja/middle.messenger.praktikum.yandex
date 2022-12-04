@@ -1,0 +1,8 @@
+<button class='LWButton pointer {{classes}}' onclick='{{onClick}}'>
+  {{#if buttonText}}
+    <p class='LWButton__text'>{{buttonText}}</p>
+  {{/if}}
+  {{#if @partial-block}}
+    {{>@partial-block}}
+  {{/if}}
+</button>

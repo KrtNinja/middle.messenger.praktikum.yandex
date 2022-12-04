@@ -1,0 +1,22 @@
+.back-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    left: 0;
+    position: absolute;
+    width: 64px;
+    height: 100vh;
+    background-color: var(--bg-paper);
+    border-right: 1px solid var(--grey);
+    cursor: pointer;
+}
+
+.back-panel__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 14px;
+    background-color: var(--primary);
+}
