@@ -1,15 +1,26 @@
-import tmpl from './input.tmpl.hbs';
-import Handlebars from 'handlebars';
+import tmpl from './input.tmpl';
 import './input.styles.css';
+import Block from '../../services/block';
 
-const defaultProps = {
-  type: 'string',
-  name: 'lw-input',
-  value: '',
-  label: 'Label',
-  errorMessage: ''
-};
+interface IInput {
+  id: string;
+  type: string;
+  name: string;
+  label: string;
+  required: boolean;
+  value?: any;
+  className?: string;
+  events?: { focus: (e: Event) => void; blur: (e: Event) => void };
+}
 
-export const registerInput = () => {
-  Handlebars.registerPartial('LWInput', props => tmpl({ ...defaultProps, ...props }));
-};
+class Input extends Block {
+  constructor(props: IInput) {
+    super('div', props);
+  }
+
+  render() {
+    return this.setTemplate(tmpl, this.props);
+  }
+}
+
+export default Input;

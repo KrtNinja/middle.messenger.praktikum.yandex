@@ -1,9 +1,7 @@
-import { registerLayout } from './Layout/Layout.ts';
-import { registerButton } from './Button/Button.ts';
-import { registerInput }     from './Input/Input.ts';
-import { registerBackPanel } from './BackPanel/BackPanel.ts';
+import { registerLayout } from './Layout/Layout';
+import { registerButton } from './Button/Button';
+import { registerBackPanel } from './BackPanel/BackPanel';
 
 registerLayout();
 registerButton();
-registerInput();
 registerBackPanel();
