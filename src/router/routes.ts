@@ -1,8 +1,8 @@
 import { Chats } from '../pages/chats/Chats';
-import { Error } from '../pages/error/Error';
-import { Login } from '../pages/login/Login.js';
-import { SignIn } from '../pages/signin/Signin.js';
-import { Profile } from '../pages/profile/Profile.js';
+import { Error }  from '../pages/error/Error';
+import { Login }   from '../pages/login/Login.ts';
+import { SignIn }  from '../pages/signin/Signin.ts';
+import { Profile } from '../pages/profile/Profile.ts';
 
 export const routes = {
   '/': Chats,
