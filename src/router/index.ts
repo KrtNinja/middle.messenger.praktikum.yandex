@@ -1,7 +1,10 @@
 import { routes } from './routes';
 
-const renderDOM = (page) => {
+const renderDOM = (page: () => string) => {
   const root = document.getElementById('root');
+  if (!root) {
+    throw new Error('Root element not found');
+  }
   root.innerHTML = page();
 };
 

@@ -4,8 +4,9 @@ import './error.styles.css';
 const data = {
   code: '404',
   message: 'Не туда попали',
-  backUrl: '/',
-  linkText: 'Назад к чатам'
+  backUrl: '/chats',
+  linkText: 'Назад к чатам',
+  onClick: ''
 };
 
 export const Error = (props = {}) => {

@@ -1,11 +1,13 @@
 import { Chats } from '../pages/chats/Chats';
-import { Error }  from '../pages/error/Error';
-import { Login }   from '../pages/login/Login.ts';
-import { SignIn }  from '../pages/signin/Signin.ts';
-import { Profile } from '../pages/profile/Profile.ts';
+import { Error } from '../pages/error/Error';
+import { Login } from '../pages/login/Login';
+import { SignIn } from '../pages/signin/Signin';
+import { Profile } from '../pages/profile/Profile';
+import { Home } from '../pages/home/Home';
 
-export const routes = {
-  '/': Chats,
+export const routes: Record<string, () => string> = {
+  '/': Home,
+  '/chats': Chats,
   '/login': Login,
   '/signin': SignIn,
   '/profile': Profile,
