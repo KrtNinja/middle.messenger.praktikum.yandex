@@ -1,3 +1,14 @@
-import template from './home.tmpl.hbs';
+import template from './home.tmpl';
+import Block from '../../services/block';
 
-export const Home = () => template();
+class Home extends Block {
+  constructor() {
+    super();
+  }
+
+  render() {
+    return template;
+  }
+}
+
+export default Home;

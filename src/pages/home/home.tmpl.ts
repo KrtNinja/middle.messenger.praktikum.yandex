@@ -1,4 +1,6 @@
-<div class='home'>
+import Handlebars from 'handlebars';
+
+const template = `<div class='home'>
   <ul class style='display: flex; gap: 10px; padding: 1rem'>
     <li>
       <a href='/chats'>Чаты</a>
@@ -20,3 +22,6 @@
     </li>
   </ul>
 </div>
+`;
+
+export default Handlebars.compile(template);

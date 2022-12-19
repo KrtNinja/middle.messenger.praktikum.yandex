@@ -1,10 +1,12 @@
-{{#>Layout}}
+import Handlebars from 'handlebars';
+
+const template = `{{#>Layout}}
   <div class='paper'>
     <div class='login'>
       <h2>Вход</h2>
       <form id='login-form' action='' method='post' class='login__form'>
-        {{>LWInput name='login' label='Логин' value='ivanovivan'}}
-        {{>LWInput name='password' type='password' label='Пароль' value='admin1234'}}
+        {{{ login }}}
+        {{{ password }}}
       </form>
       <div class='login__actions'>
         {{>LWButton buttonText='Авторизоваться'}}
@@ -18,4 +20,6 @@
       </div>
     </div>
   </div>
-{{/Layout}}
+{{/Layout}}`;
+
+export default Handlebars.compile(template);
