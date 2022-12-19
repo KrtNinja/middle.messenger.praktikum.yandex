@@ -1,9 +1,18 @@
-import template from './chats.tmpl.hbs';
+import template from './chats.tmpl';
+import Block from '../../services/block';
 
 const data = {
   text: 'Главная страница с чатами'
 };
 
-export const Chats = () => {
-  return template(data);
-};
+class Chats extends Block {
+  constructor() {
+    super('div', data);
+  }
+
+  public render() {
+    return template;
+  }
+}
+
+export default Chats;

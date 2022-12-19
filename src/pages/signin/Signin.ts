@@ -67,7 +67,7 @@ class SignIn extends Block {
   }
 
   render() {
-    return this.setTemplate(template, this.props);
+    return template;
   }
 }
 

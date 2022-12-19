@@ -19,7 +19,7 @@ class Input extends Block {
   }
 
   render() {
-    return this.setTemplate(tmpl, this.props);
+    return tmpl;
   }
 }
 

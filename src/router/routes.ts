@@ -1,4 +1,4 @@
-import { Chats } from '../pages/chats/Chats';
+import Chats from '../pages/chats/Chats';
 import { Error } from '../pages/error/Error';
 import { Login } from '../pages/login/Login';
 import SignIn from '../pages/signin/Signin';
@@ -10,7 +10,7 @@ export type Callback = () => string
 
 export const routes: Record<string, Block | Callback> = {
   '/': Home,
-  '/chats': Chats,
+  '/chats': new Chats(),
   '/login': Login,
   '/signin': new SignIn(),
   '/profile': Profile,

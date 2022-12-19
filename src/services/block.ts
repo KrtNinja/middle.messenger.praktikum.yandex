@@ -74,7 +74,7 @@ abstract class Block {
   }
 
   private _renderComponent(): void {
-    const fragment = this.render();
+    const fragment = this.getFragment(this.render(), this.props);
     const element = fragment.firstElementChild as HTMLElement;
 
     if (this.element) {
@@ -109,7 +109,7 @@ abstract class Block {
     }
   }
 
-  public abstract render(): DocumentFragment;
+  public abstract render(): HandlebarsTemplateDelegate;
 
   public setProps(newProps: TProps): void {
     if (!newProps) {
@@ -160,7 +160,7 @@ abstract class Block {
     return { children, props };
   }
 
-  protected setTemplate(template: (...args: unknown[]) => string, props: TProps) {
+  protected getFragment(template: (...args: unknown[]) => string, props: TProps) {
     const propsAndStubs = { ...props };
 
     Object.entries(this.children).forEach(([key, child]) => {
