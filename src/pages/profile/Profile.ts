@@ -1,5 +1,6 @@
-import template from './profile.tmpl.hbs';
+import template from './profile.tmpl';
 import './profile.styles.css';
+import Block from '../../services/block';
 
 const props = {
   first_name: 'Иван',
@@ -13,4 +14,14 @@ const props = {
   ]
 };
 
-export const Profile = () => template(props);
+class Profile extends Block {
+  constructor() {
+    super('div', props);
+  }
+
+  render() {
+    return template;
+  }
+}
+
+export default Profile;

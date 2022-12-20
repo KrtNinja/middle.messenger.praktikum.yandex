@@ -1,5 +1,6 @@
-import template from './error.tmpl.hbs';
+import template from './error.tmpl';
 import './error.styles.css';
+import Block from '../../services/block';
 
 const data = {
   code: '404',
@@ -9,9 +10,17 @@ const data = {
   onClick: ''
 };
 
-export const Error = (props = {}) => {
-  const finalProps = Object.assign(data, props);
-  finalProps.onClick = `location.href = "${finalProps.backUrl}"`;
+class ErrorPage extends Block {
+  constructor(public props = {}) {
+    const finalProps = Object.assign(data, props);
+    finalProps.onClick = `location.href = "${finalProps.backUrl}"`;
 
-  return template(finalProps);
-};
+    super('div', finalProps);
+  }
+
+  render() {
+    return template;
+  }
+}
+
+export default ErrorPage;
