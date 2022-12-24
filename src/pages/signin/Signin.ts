@@ -2,6 +2,7 @@ import template from './signin.tmpl';
 import './signin.styles.css';
 import Block, { TProps } from '../../services/block';
 import Input from '../../components/Input/Input';
+import { LWButton } from '../../components/Button/Button';
 
 class SignIn extends Block {
   constructor(public props: TProps = {}) {
@@ -61,6 +62,16 @@ class SignIn extends Block {
         label: 'Повторите пароль',
         required: true,
         value: 'admin1234'
+      }),
+      registration_button: new LWButton({
+        buttonText: 'Зарегистрироваться'
+      }),
+      open_login_button: new LWButton({
+        buttonText: 'Войти',
+        variant: 'text',
+        color: 'primary',
+        size: 'small',
+        onClick: () => (document.location.href = '/login')
       }),
       ...props
     });

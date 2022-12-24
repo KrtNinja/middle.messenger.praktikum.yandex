@@ -1,6 +1,7 @@
 import template from './profile.tmpl';
 import './profile.styles.css';
 import Block from '../../services/block';
+import { LWButton } from '../../components/Button/Button';
 
 const props = {
   first_name: 'Иван',
@@ -16,7 +17,25 @@ const props = {
 
 class Profile extends Block {
   constructor() {
-    super('div', props);
+    super('div', {
+      change_data_button: new LWButton({
+        buttonText: 'Изменить данные',
+        variant: 'text',
+        color: 'primary'
+      }),
+      change_password_button: new LWButton({
+        buttonText: 'Изменить пароль',
+        variant: 'text',
+        color: 'primary'
+      }),
+      exit_button: new LWButton({
+        buttonText: 'Выйти',
+        variant: 'text',
+        color: 'error',
+        onClick: () => (document.location.href = '/login')
+      }),
+      ...props
+    });
   }
 
   render() {

@@ -4,13 +4,7 @@ const template = `{{#>Layout }}
   <div class='error-page'>
     <h1>{{code}}</h1>
     <h2>{{message}}</h2>
-    {{>LWButton
-      variant='text'
-      color='primary'
-      size='small'
-      buttonText=linkText
-      onClick=onClick
-    }}
+    {{{ back_button }}}
   </div>
 {{/Layout}}`;
 

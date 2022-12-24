@@ -29,14 +29,9 @@ const template = `{{#>Layout}}
       </ul>
     </div>
     <div class='profile__actions'>
-      {{>LWButton variant='text' color='primary' buttonText='Изменить данные' }}
-      {{>LWButton variant='text' color='primary' buttonText='Изменить пароль' }}
-      {{>LWButton
-        variant='text'
-        color='error'
-        buttonText='Выйти'
-        onClick='location.href = "/login"'
-      }}
+      {{{ change_data_button }}}
+      {{{ change_password_button }}}
+      {{{ exit_button }}}
     </div>
   </div>
 {{/Layout}}

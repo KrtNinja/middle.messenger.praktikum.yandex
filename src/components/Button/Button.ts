@@ -1,28 +1,73 @@
-import tmpl from './button.tmpl.hbs';
-import Handlebars from 'handlebars';
+import tmpl from './button.tmpl';
 import './button.styles.css';
+import Block from '../../services/block';
 
-const classByVariant = {
+type TVariant = 'contained' | 'text';
+type TColor = 'white' | 'primary' | 'error';
+type TSize = 'small' | 'default';
+
+const classByVariant: Record<TVariant, string> = {
   contained: 'LWButton--contained',
   text: 'LWButton--text'
 };
 
-const classByColor = {
+const classByColor: Record<TColor, string> = {
   white: 'LWButton--white',
   primary: 'LWButton--primary',
   error: 'LWButton--error'
 };
 
-const classBySize = {
-  small: 'subtitle'
+const classBySize: Record<TSize, string> = {
+  small: 'subtitle',
+  default: ''
 };
 
-export const registerButton = () => {
-  Handlebars.registerPartial('LWButton', props => {
-    props.classes = `${classByVariant[props?.variant ?? 'contained']} ${
-      classByColor[props?.color ?? 'white']
-    } ${classBySize[props?.size] ?? ''}`;
+export interface ILWButton {
+  buttonText: string;
+  classes?: string;
+  variant?: TVariant;
+  color?: TColor;
+  size?: TSize;
+  onClick?: (event: MouseEvent) => void;
+}
 
-    return tmpl(props);
-  });
+const defaultProps = {
+  classes: '',
+  buttonText: '',
+  variant: 'contained' as TVariant,
+  color: 'white' as TColor,
+  size: 'default' as TSize,
+  onClick: () => void 0
 };
+
+export class LWButton extends Block {
+  constructor(public props: ILWButton) {
+    super('div', props);
+  }
+
+  render() {
+    this.setProps({ classes: this.getClasses() });
+
+    return tmpl;
+  }
+
+  public dispatchMountComponent() {
+    this.getElement().addEventListener('click', this.onClickHandler);
+  }
+
+  private onClickHandler: EventListener = (event: MouseEvent) => {
+    if (!this.props.onClick) {
+      return;
+    }
+
+    this.props.onClick(event);
+  };
+
+  private getClasses(): string {
+    const variant = this.props.variant || defaultProps.variant;
+    const color = this.props.color || defaultProps.color;
+    const size = this.props.size || defaultProps.size;
+
+    return `${classByVariant[variant]} ${classByColor[color]} ${classBySize[size]}`;
+  }
+}

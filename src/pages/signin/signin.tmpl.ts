@@ -15,14 +15,8 @@ const template = `
         {{{ repeat_password }}}
       </form>
       <div class='signin__actions'>
-        {{>LWButton buttonText='Зарегистрироваться'}}
-        {{>LWButton
-          variant='text'
-          color='primary'
-          size='small'
-          buttonText='Войти'
-          onClick='location.href = "/login"'
-        }}
+        {{{ registration_button }}}
+        {{{ open_login_button }}}
       </div>
     </div>
   </div>

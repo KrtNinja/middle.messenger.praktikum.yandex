@@ -9,14 +9,8 @@ const template = `{{#>Layout}}
         {{{ password }}}
       </form>
       <div class='login__actions'>
-        {{>LWButton buttonText='Авторизоваться'}}
-        {{>LWButton
-          variant='text'
-          color='primary'
-          size='small'
-          buttonText='Нет аккаунта?'
-          onClick='location.href = "/signin"'
-        }}
+        {{{ login_button }}}
+        {{{ open_signin_button }}}
       </div>
     </div>
   </div>

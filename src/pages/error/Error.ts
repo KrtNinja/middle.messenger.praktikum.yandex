@@ -1,6 +1,7 @@
 import template from './error.tmpl';
 import './error.styles.css';
 import Block from '../../services/block';
+import { LWButton } from '../../components/Button/Button';
 
 const data = {
   code: '404',
@@ -13,9 +14,17 @@ const data = {
 class ErrorPage extends Block {
   constructor(public props = {}) {
     const finalProps = Object.assign(data, props);
-    finalProps.onClick = `location.href = "${finalProps.backUrl}"`;
 
-    super('div', finalProps);
+    super('div', {
+      back_button: new LWButton({
+        buttonText: finalProps.linkText,
+        variant: 'text',
+        color: 'primary',
+        size: 'small',
+        onClick: () => document.location.href = `${finalProps.backUrl}`
+      }),
+      ...finalProps
+    });
   }
 
   render() {

@@ -2,6 +2,7 @@ import template from './login.tmpl';
 import './login.styles.css';
 import Block from '../../services/block';
 import Input from '../../components/Input/Input';
+import { LWButton } from '../../components/Button/Button';
 
 class Login extends Block {
   constructor() {
@@ -21,6 +22,16 @@ class Login extends Block {
         label: 'Пароль',
         required: true,
         value: 'admin1234'
+      }),
+      login_button: new LWButton({
+        buttonText: 'Войти'
+      }),
+      open_signin_button: new LWButton({
+        buttonText: 'Нет аккаунта?',
+        variant: 'text',
+        color: 'primary',
+        size: 'small',
+        onClick: () => (document.location.href = '/signin')
       })
     });
   }
