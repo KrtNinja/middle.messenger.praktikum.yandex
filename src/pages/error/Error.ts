@@ -12,7 +12,7 @@ const data = {
 };
 
 class ErrorPage extends Block {
-  constructor(public props = {}) {
+  constructor(props = {}) {
     const finalProps = Object.assign(data, props);
 
     super('div', {

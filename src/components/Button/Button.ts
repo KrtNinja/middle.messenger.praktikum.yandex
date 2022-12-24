@@ -41,13 +41,15 @@ const defaultProps = {
 };
 
 export class LWButton extends Block {
-  constructor(public props: ILWButton) {
+  public props: ILWButton;
+
+  constructor(props: ILWButton) {
     super('div', props);
+
+    this.setProps({ classes: this.getClasses() });
   }
 
   render() {
-    this.setProps({ classes: this.getClasses() });
-
     return tmpl;
   }
 

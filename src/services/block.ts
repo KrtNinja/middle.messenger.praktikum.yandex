@@ -132,6 +132,10 @@ class Block {
     return <HTMLElement>this.element;
   }
 
+  public updatePropValue(name: string, newValue: any): void {
+    this.props[name] = newValue;
+  }
+
   private makePropsProxy(props: TProps): TProps {
     const proxySetting = {
       get: (target: TProps, prop: string): unknown => {

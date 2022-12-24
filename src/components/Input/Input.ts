@@ -25,14 +25,12 @@ interface IInput {
 export class LWInput extends Block {
   public value = '';
 
-  constructor(public props: IInput) {
+  constructor(props: IInput) {
     super('div', props);
 
     this.setProps({
       value: typeof this.props.value === 'string' ? this.props.value : this.props.value()
     });
-
-
   }
 
   render() {
