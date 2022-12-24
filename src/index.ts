@@ -1,3 +1,3 @@
-import './components/register.components';
+import './partials/register.partials';
 import './router';
 import './assets/styles';
