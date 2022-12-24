@@ -1,9 +1,10 @@
 import { v4 as uuid } from 'uuid';
 import EventBus from './event.bus';
+import Handlebars from 'handlebars';
 
 export type TProps = Record<string, any>;
 
-abstract class Block {
+class Block {
   private EVENTS: Record<string, string> = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -14,15 +15,13 @@ abstract class Block {
   private element: HTMLElement | undefined;
 
   protected eventBus: EventBus;
-  protected props: TProps;
+  protected props: TProps = {};
   protected children: Record<string, Block>;
-  protected id: string;
+  public id: string = uuid();
 
-  protected constructor(private readonly tagName = 'div', propsAndChildren: TProps = {}) {
-    this.id = uuid();
-
+  constructor(private readonly tagName = 'div', propsAndChildren: TProps = {}) {
     const { children, props } = this.getChildren(propsAndChildren);
-    this.children = children;
+    this.children = this.makePropsProxy(children);
     this.props = this.makePropsProxy({ ...props, id: this.id });
 
     this.eventBus = new EventBus();
@@ -74,7 +73,7 @@ abstract class Block {
   }
 
   private _renderComponent(): void {
-    const fragment = this.getFragment(this.render(), this.props);
+    const fragment = this.getFragment();
     const element = fragment.firstElementChild as HTMLElement;
 
     if (this.element) {
@@ -109,7 +108,17 @@ abstract class Block {
     }
   }
 
-  public abstract render(): HandlebarsTemplateDelegate;
+  public render(): HandlebarsTemplateDelegate {
+    return Handlebars.compile('');
+  }
+
+  public setChildren(newChildren: TProps): void {
+    if (!newChildren) {
+      return;
+    }
+
+    Object.assign(this.children, newChildren);
+  }
 
   public setProps(newProps: TProps): void {
     if (!newProps) {
@@ -160,8 +169,10 @@ abstract class Block {
     return { children, props };
   }
 
-  protected getFragment(template: (...args: unknown[]) => string, props: TProps) {
-    const propsAndStubs = { ...props };
+  protected getFragment() {
+    const template = this.render();
+
+    const propsAndStubs = { ...this.props };
 
     Object.entries(this.children).forEach(([key, child]) => {
       propsAndStubs[key] = `<div data-id='${child.id}'></div>`;

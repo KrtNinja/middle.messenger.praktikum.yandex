@@ -1,70 +1,91 @@
 import template from './signin.tmpl';
 import './signin.styles.css';
-import Block, { TProps } from '../../services/block';
-import Input from '../../components/Input/Input';
+import Block from '../../services/block';
+import { LWInput } from '../../components/Input/Input';
 import { LWButton } from '../../components/Button/Button';
 
+type TChangeableKeys =
+  | 'email'
+  | 'login'
+  | 'first_name'
+  | 'second_name'
+  | 'phone'
+  | 'password'
+  | 'repeat_password';
+
 class SignIn extends Block {
-  constructor(public props: TProps = {}) {
-    super('div', {
-      email: new Input({
-        id: 'email',
+  // Временно заполнено тестовыми
+  public email = 'pochta@yandex.ru';
+  public login = 'ivanovivan';
+  public first_name = 'Иван';
+  public second_name = 'Иванов';
+  public phone = '+79991234455';
+  public password = 'admin1234';
+  public repeat_password = 'admin1234';
+
+  constructor() {
+    super();
+
+    this.setChildren({
+      email: new LWInput({
         type: 'text',
         name: 'email',
         label: 'Почта',
         required: true,
-        value: 'pochta@yandex.ru'
+        value: this.email,
+        events: { onChange: event => this.onChangeValue('email', event.target.value) }
       }),
-      login: new Input({
-        id: 'login',
+      login: new LWInput({
         type: 'text',
         name: 'login',
         label: 'Логин',
         required: true,
-        value: 'ivanovivan'
+        value: this.login,
+        events: { onChange: event => this.onChangeValue('login', event.target.value) }
       }),
-      first_name: new Input({
-        id: 'first_name',
+      first_name: new LWInput({
         type: 'text',
         name: 'first_name',
         label: 'Имя',
         required: true,
-        value: 'Иван'
+        value: this.first_name,
+        events: { onChange: event => this.onChangeValue('first_name', event.target.value) }
       }),
-      second_name: new Input({
-        id: 'second_name',
+      second_name: new LWInput({
         type: 'text',
         name: 'second_name',
         label: 'Фамилия',
         required: true,
-        value: 'Иванов'
+        value: this.second_name,
+        events: { onChange: event => this.onChangeValue('second_name', event.target.value) }
       }),
-      phone: new Input({
-        id: 'phone',
+      phone: new LWInput({
         type: 'phone',
         name: 'phone',
         label: 'Телефон',
         required: true,
-        value: '+79031112233'
+        value: this.phone,
+        events: { onChange: event => this.onChangeValue('phone', event.target.value) }
       }),
-      password: new Input({
-        id: 'password',
+      password: new LWInput({
         type: 'password',
         name: 'password',
         label: 'Пароль',
         required: true,
-        value: 'admin1234'
+        value: this.password,
+        events: { onChange: event => this.onChangeValue('password', event.target.value) }
       }),
-      repeat_password: new Input({
-        id: 'repeat_password',
+      repeat_password: new LWInput({
         type: 'password',
         name: 'repeat_password',
         label: 'Повторите пароль',
         required: true,
-        value: 'admin1234'
+        value: this.repeat_password,
+        events: { onChange: event => this.onChangeValue('repeat_password', event.target.value) }
       }),
       registration_button: new LWButton({
-        buttonText: 'Зарегистрироваться'
+        buttonText: 'Зарегистрироваться',
+        onClick: () => this.submitData()
       }),
       open_login_button: new LWButton({
         buttonText: 'Войти',
@@ -72,13 +93,34 @@ class SignIn extends Block {
         color: 'primary',
         size: 'small',
         onClick: () => (document.location.href = '/login')
-      }),
-      ...props
+      })
     });
   }
 
   render() {
     return template;
+  }
+
+  dispatchMountComponent() {
+    super.dispatchMountComponent();
+  }
+
+  private onChangeValue(prop: TChangeableKeys, value: string) {
+    this[prop] = value;
+  }
+
+  public submitData() {
+    const dto = {
+      email: this.email,
+      login: this.login,
+      first_name: this.first_name,
+      second_name: this.second_name,
+      phone: this.phone,
+      password: this.password,
+      repeat_password: this.repeat_password
+    };
+
+    console.log(dto);
   }
 }
 

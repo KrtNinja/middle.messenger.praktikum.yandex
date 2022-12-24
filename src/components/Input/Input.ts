@@ -2,25 +2,55 @@ import tmpl from './input.tmpl';
 import './input.styles.css';
 import Block from '../../services/block';
 
+interface IEvent extends Event {
+  target: HTMLInputElement;
+}
+
+type TValueCallback = () => any;
+
 interface IInput {
-  id: string;
   type: string;
   name: string;
   label: string;
   required: boolean;
-  value?: any;
+  value?: any | TValueCallback;
   className?: string;
-  events?: { focus: (e: Event) => void; blur: (e: Event) => void };
+  events?: {
+    focus?: (e: IEvent) => void;
+    blur?: (e: IEvent) => void;
+    onChange?: (e: IEvent) => void;
+  };
 }
 
-class Input extends Block {
-  constructor(props: IInput) {
+export class LWInput extends Block {
+  public value = '';
+
+  constructor(public props: IInput) {
     super('div', props);
+
+    this.setProps({
+      value: typeof this.props.value === 'string' ? this.props.value : this.props.value()
+    });
+
+
   }
 
   render() {
     return tmpl;
   }
-}
 
-export default Input;
+  dispatchMountComponent() {
+    super.dispatchMountComponent();
+
+    this.value = this.props.value;
+    this.getElement().addEventListener('change', this.onChange);
+  }
+
+  private onChange = (event: IEvent) => {
+    this.value = event.target.value;
+
+    if (this.props.events?.onChange) {
+      this.props.events.onChange(event);
+    }
+  };
+}

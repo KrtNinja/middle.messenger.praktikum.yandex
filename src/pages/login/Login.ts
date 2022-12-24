@@ -1,30 +1,38 @@
 import template from './login.tmpl';
 import './login.styles.css';
 import Block from '../../services/block';
-import Input from '../../components/Input/Input';
+import { LWInput } from '../../components/Input/Input';
 import { LWButton } from '../../components/Button/Button';
 
+type TChangeableKeys = 'login' | 'password';
+
 class Login extends Block {
+  public login = 'ivanovivan';
+  public password = 'admin1234';
+
   constructor() {
-    super('div', {
-      login: new Input({
-        id: 'login',
+    super();
+
+    this.setChildren({
+      login: new LWInput({
         type: 'text',
         name: 'login',
         label: 'Логин',
         required: true,
-        value: 'ivanovivan'
+        value: this.login,
+        events: { onChange: event => this.onChangeValue('login', event.target.value) }
       }),
-      password: new Input({
-        id: 'password',
+      password: new LWInput({
         type: 'password',
         name: 'password',
         label: 'Пароль',
         required: true,
-        value: 'admin1234'
+        value: this.password,
+        events: { onChange: event => this.onChangeValue('password', event.target.value) }
       }),
       login_button: new LWButton({
-        buttonText: 'Войти'
+        buttonText: 'Войти',
+        onClick: () => this.submitData()
       }),
       open_signin_button: new LWButton({
         buttonText: 'Нет аккаунта?',
@@ -38,6 +46,19 @@ class Login extends Block {
 
   render() {
     return template;
+  }
+
+  private onChangeValue(prop: TChangeableKeys, value: string) {
+    this[prop] = value;
+  }
+
+  public submitData() {
+    const dto = {
+      login: this.login,
+      password: this.password
+    };
+
+    console.log(dto);
   }
 }
 
