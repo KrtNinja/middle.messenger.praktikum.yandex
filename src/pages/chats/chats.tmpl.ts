@@ -8,7 +8,7 @@ const template = `{{#>Layout}}
       {{{ input_search }}}
     </div>
     <div class='chats__panel_list'>
-      Chats
+    {{#components chats}} {{/components}}
     </div>
     <div class='chats__panel_footer'>
       {{{ profile_button }}}

@@ -1,0 +1,7 @@
+.chat-item {
+    display: flex;
+    align-items: center;
+    min-height: 72px;
+    padding: var(--s1);
+    border-bottom: 1px solid var(--grey);
+}
