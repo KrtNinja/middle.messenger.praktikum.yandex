@@ -3,6 +3,7 @@ import './login.styles.css';
 import Block from '../../services/block';
 import { LWInput } from '../../components/Input/Input';
 import { LWButton } from '../../components/Button/Button';
+import validator from '../../services/validator';
 
 type TChangeableKeys = 'login' | 'password';
 
@@ -20,6 +21,7 @@ class Login extends Block {
         label: 'Логин',
         required: true,
         value: this.login,
+        validateRule: validator.rules.login,
         events: { onChange: event => this.onChangeValue('login', event.target.value) }
       }),
       password: new LWInput({
@@ -28,6 +30,7 @@ class Login extends Block {
         label: 'Пароль',
         required: true,
         value: this.password,
+        validateRule: validator.rules.password,
         events: { onChange: event => this.onChangeValue('password', event.target.value) }
       }),
       login_button: new LWButton({
@@ -48,6 +51,16 @@ class Login extends Block {
     return template;
   }
 
+  private validateAll(): boolean {
+    return Object.values(this.children).every(child => {
+      if (child instanceof LWInput) {
+        return child.validate();
+      }
+
+      return true;
+    });
+  }
+
   private onChangeValue(prop: TChangeableKeys, value: string) {
     this[prop] = value;
   }
@@ -57,6 +70,10 @@ class Login extends Block {
       login: this.login,
       password: this.password
     };
+
+    if (!this.validateAll()) {
+      return;
+    }
 
     console.log(dto);
   }

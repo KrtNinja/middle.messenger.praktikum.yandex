@@ -1,6 +1,7 @@
 import tmpl from './input.tmpl';
 import './input.styles.css';
 import Block from '../../services/block';
+import validator, { IRule } from '../../services/validator';
 
 interface IEvent extends Event {
   target: HTMLInputElement;
@@ -15,6 +16,8 @@ interface IInput {
   required: boolean;
   value?: any | TValueCallback;
   className?: string;
+  validateRule?: IRule;
+  errorMessage?: string;
   events?: {
     focus?: (e: IEvent) => void;
     blur?: (e: IEvent) => void;
@@ -27,9 +30,15 @@ export class LWInput extends Block {
 
   constructor(props: IInput) {
     super('div', props);
-
+    // this.updatePropValue('value', props.value);
+    this.value = props.value;
     this.setProps({
-      value: typeof this.props.value === 'string' ? this.props.value : this.props.value()
+      events: {
+        ...props.events,
+        input: this.onChange,
+        focusin: this.validate,
+        focusout: this.validate
+      }
     });
   }
 
@@ -37,12 +46,23 @@ export class LWInput extends Block {
     return tmpl;
   }
 
-  dispatchMountComponent() {
-    super.dispatchMountComponent();
+  public validate = () => {
+    if (!this.props.validateRule) {
+      return true;
+    }
 
-    this.value = this.props.value;
-    this.getElement().addEventListener('change', this.onChange);
-  }
+    const validatorData = validator.validate(this.props.validateRule, this.value);
+
+    if (validatorData.valid) {
+      this.setProps({ errorMessage: '', value: this.value });
+      this.getElement().querySelector('input')?.classList.remove('input--error');
+      return true;
+    }
+
+    this.setProps({ errorMessage: validatorData.msg, value: this.value });
+    this.getElement().querySelector('input')?.classList.add('input--error');
+    return false;
+  };
 
   private onChange = (event: IEvent) => {
     this.value = event.target.value;

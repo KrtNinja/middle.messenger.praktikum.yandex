@@ -66,20 +66,20 @@ class Block {
   private _componentDidUpdate(oldProps: TProps, newProps: TProps): void {
     const isUpdate = this.componentDidUpdate(oldProps, newProps);
 
-    if (isUpdate) {
-      this.removeEvents();
-      this.eventBus.emit(this.EVENTS.FLOW_RENDER);
+    if (!isUpdate) {
+      return;
     }
+
+    this._renderComponent();
   }
 
   private _renderComponent(): void {
     const fragment = this.getFragment();
+    this.removeEvents();
     const element = fragment.firstElementChild as HTMLElement;
 
-    if (this.element) {
-      this.element.replaceWith(element);
-      this.element = element;
-    }
+    this.element!.replaceWith(element);
+    this.element = element;
 
     this.addEvents();
   }
