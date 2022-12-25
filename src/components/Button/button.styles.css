@@ -13,9 +13,11 @@
 .LWButton--white {
     color: var(--white);
 }
+
 .LWButton--primary {
     color: var(--primary);
 }
+
 .LWButton--error {
     color: var(--error);
 }

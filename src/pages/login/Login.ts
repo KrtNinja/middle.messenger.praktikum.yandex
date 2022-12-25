@@ -9,7 +9,7 @@ type TChangeableKeys = 'login' | 'password';
 
 class Login extends Block {
   public login = 'ivanovivan';
-  public password = 'admin1234';
+  public password = 'Admin1234';
 
   constructor() {
     super();

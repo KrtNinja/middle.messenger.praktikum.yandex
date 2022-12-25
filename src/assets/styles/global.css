@@ -1,12 +1,14 @@
 .pointer {
     cursor: pointer;
 }
+
 .paper {
     display: flex;
     box-shadow: var(--bs-primary);
     background-color: var(--bg-paper);
     height: min-content;
 }
+
 .divider {
     width: 100%;
     height: 1px;
@@ -16,9 +18,11 @@
 .error--text {
     color: var(--error);
 }
+
 .grey--text {
     color: var(--grey);
 }
+
 .subtitle {
     font-size: 12px;
 }
