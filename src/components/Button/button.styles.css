@@ -35,6 +35,10 @@
     transform: scale(0.95);
 }
 
-.LWButton__text {
+.LWButton__padding--small p {
+    padding: 5px;
+}
+
+.LWButton__padding--default p {
     padding: 5px 70px;
 }

@@ -8,13 +8,21 @@ interface IEvent extends Event {
 }
 
 type TValueCallback = () => any;
+type TVariant = 'default' | 'contained';
+
+const variants: Record<TVariant, string> = {
+  default: 'LWInput__input--default',
+  contained: 'LWInput__input--contained'
+};
 
 interface IInput {
   type: string;
   name: string;
   label: string;
   required: boolean;
+  variant?: TVariant;
   value?: any | TValueCallback;
+  placeholder?: string;
   className?: string;
   validateRule?: IRule;
   errorMessage?: string;
@@ -30,9 +38,9 @@ export class LWInput extends Block {
 
   constructor(props: IInput) {
     super('div', props);
-    // this.updatePropValue('value', props.value);
     this.value = props.value;
     this.setProps({
+      inputClasses: this.getInputClasses(),
       events: {
         ...props.events,
         input: this.onChange,
@@ -71,4 +79,10 @@ export class LWInput extends Block {
       this.props.events.onChange(event);
     }
   };
+
+  private getInputClasses(): string {
+    const variant: TVariant = this.props.variant || 'default';
+
+    return `${variants[variant]}`;
+  }
 }

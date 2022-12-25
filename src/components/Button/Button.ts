@@ -4,7 +4,13 @@ import Block from '../../services/block';
 
 type TVariant = 'contained' | 'text';
 type TColor = 'white' | 'primary' | 'error';
-type TSize = 'small' | 'default';
+type TSize = 'small' | 'default' | 'large';
+type TPadding = 'small' | 'default';
+
+const classByPadding: Record<TPadding, string> = {
+  small: 'LWButton__padding--small',
+  default: 'LWButton__padding--default'
+};
 
 const classByVariant: Record<TVariant, string> = {
   contained: 'LWButton--contained',
@@ -19,7 +25,8 @@ const classByColor: Record<TColor, string> = {
 
 const classBySize: Record<TSize, string> = {
   small: 'subtitle',
-  default: ''
+  default: '',
+  large: 'large'
 };
 
 export interface ILWButton {
@@ -28,6 +35,7 @@ export interface ILWButton {
   variant?: TVariant;
   color?: TColor;
   size?: TSize;
+  padding?: TPadding;
   onClick?: (event: MouseEvent) => void;
 }
 
@@ -37,6 +45,7 @@ const defaultProps = {
   variant: 'contained' as TVariant,
   color: 'white' as TColor,
   size: 'default' as TSize,
+  padding: 'default' as TPadding,
   onClick: () => void 0
 };
 
@@ -69,7 +78,8 @@ export class LWButton extends Block {
     const variant = this.props.variant || defaultProps.variant;
     const color = this.props.color || defaultProps.color;
     const size = this.props.size || defaultProps.size;
+    const padding = this.props.padding || defaultProps.padding;
 
-    return `${classByVariant[variant]} ${classByColor[color]} ${classBySize[size]}`;
+    return `${classByVariant[variant]} ${classByColor[color]} ${classBySize[size]} ${classByPadding[padding]}`;
   }
 }
