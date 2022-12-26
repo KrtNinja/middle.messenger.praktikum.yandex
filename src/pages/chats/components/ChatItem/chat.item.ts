@@ -1,7 +1,7 @@
-import Block from '../../services/block';
+import Block from '../../../../services/block';
 import template from './chat.tmpl';
 import './chat.item.css';
-import formatDate from '../../utils/formatDate';
+import formatDate from '../../../../utils/formatDate';
 
 export interface IChatItemProps {
   name: string;

@@ -2,7 +2,7 @@ import template from './chats.tmpl';
 import Block from '../../services/block';
 import { LWButton } from '../../components/Button/Button';
 import { LWInput } from '../../components/Input/Input';
-import ChatItem from '../../components/ChatItem/chat.item';
+import ChatItem from './components/ChatItem/chat.item';
 import { Message } from './components/message/Message';
 
 const data = {
