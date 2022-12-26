@@ -15,7 +15,7 @@ const template = `{{#>Layout}}
     </div>
   </div>
   <div class='chats__message-area'>
-    {{{ messages }}}
+    {{{ message }}}
   </div>
 </div>
 {{/Layout}}`;

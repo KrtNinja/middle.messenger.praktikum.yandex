@@ -5,9 +5,10 @@ import Block from '../../services/block';
 type TVariant = 'contained' | 'text';
 type TColor = 'white' | 'primary' | 'error';
 type TSize = 'small' | 'default' | 'large';
-type TPadding = 'small' | 'default';
+type TPadding = 'none' | 'small' | 'default';
 
 const classByPadding: Record<TPadding, string> = {
+  none: 'LWButton__padding--none',
   small: 'LWButton__padding--small',
   default: 'LWButton__padding--default'
 };

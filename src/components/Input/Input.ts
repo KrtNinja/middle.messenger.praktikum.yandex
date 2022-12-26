@@ -19,7 +19,7 @@ interface IInput {
   type: string;
   name: string;
   label: string;
-  required: boolean;
+  required?: boolean;
   variant?: TVariant;
   value?: any | TValueCallback;
   placeholder?: string;
@@ -29,6 +29,7 @@ interface IInput {
   events?: {
     focus?: (e: IEvent) => void;
     blur?: (e: IEvent) => void;
+    keydown?: (e: KeyboardEvent) => void;
     onChange?: (e: IEvent) => void;
   };
 }
@@ -44,7 +45,6 @@ export class LWInput extends Block {
       events: {
         ...props.events,
         input: this.onChange,
-        focusin: this.validate,
         focusout: this.validate
       }
     });
@@ -71,6 +71,14 @@ export class LWInput extends Block {
     this.getElement().querySelector('input')?.classList.add('input--error');
     return false;
   };
+
+  updatePropValue(name: string, newValue: any) {
+    super.updatePropValue(name, newValue);
+
+    if (name === 'value') {
+      this.value = newValue;
+    }
+  }
 
   private onChange = (event: IEvent) => {
     this.value = event.target.value;
