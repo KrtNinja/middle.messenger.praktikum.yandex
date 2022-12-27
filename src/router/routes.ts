@@ -6,6 +6,7 @@ import Profile from '../pages/profile/Profile';
 import Home from '../pages/home/Home';
 import Block from '../services/block';
 import EditProfile from '../pages/edit-profile/Edit.profile';
+import ChangePassword from '../pages/change-password/Password';
 
 export const routes: Record<string, Block> = {
   '/': new Home(),
@@ -14,6 +15,7 @@ export const routes: Record<string, Block> = {
   '/signin': new SignIn(),
   '/profile': new Profile(),
   '/profile/edit': new EditProfile(),
+  '/profile/password': new ChangePassword(),
   '/404': new Error(),
   '/500': new Error({ code: '500', message: 'Мы уже фиксим' })
 };

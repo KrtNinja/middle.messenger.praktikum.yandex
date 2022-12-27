@@ -15,6 +15,12 @@ const template = `<div class='home'>
       <a href='/profile'>Профиль</a>
     </li>
     <li>
+      <a href='/profile/edit'>Редактирование профиля</a>
+    </li>
+    <li>
+      <a href='/profile/password'>Изменение пароля</a>
+    </li>
+    <li>
       <a href='/404'>Ошибка 404</a>
     </li>
     <li>

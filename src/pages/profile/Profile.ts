@@ -27,7 +27,8 @@ class Profile extends Block {
       change_password_button: new LWButton({
         buttonText: 'Изменить пароль',
         variant: 'text',
-        color: 'primary'
+        color: 'primary',
+        events: { click: () => (document.location.href = '/profile/password') }
       }),
       exit_button: new LWButton({
         buttonText: 'Выйти',

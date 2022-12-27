@@ -61,8 +61,12 @@ class EditProfile extends Block {
         type: 'text',
         name: 'nickname',
         label: 'Никнейм',
-        value: this.second_name,
-        validateRule: validator.rules.name,
+        value: this.nickname,
+        validateRule: {
+          pattern: '',
+          required: true,
+          msg: 'Не может быть пустым'
+        },
         events: { onChange: event => this.onChangeValue('nickname', event.target.value) }
       }),
       phone: new LWInput({
@@ -82,7 +86,7 @@ class EditProfile extends Block {
         variant: 'text',
         color: 'primary',
         size: 'small',
-        events: { click: () => (history.back())}
+        events: { click: () => (document.location.href = '/profile')}
       })
     });
   }
