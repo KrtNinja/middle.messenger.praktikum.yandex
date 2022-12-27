@@ -5,11 +5,13 @@ const template = `{{#>Layout}}
     <div class='login'>
       <h2>Вход</h2>
       <form id='login-form' action='' method='post' class='login__form'>
-        {{{ login }}}
-        {{{ password }}}
+        <div class='login__form_inputs'>
+          {{{ login }}}
+          {{{ password }}}
+        </div>
+        {{{ login_button }}}
       </form>
       <div class='login__actions'>
-        {{{ login_button }}}
         {{{ open_signin_button }}}
       </div>
     </div>

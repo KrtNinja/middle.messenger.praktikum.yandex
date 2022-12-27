@@ -12,7 +12,7 @@ class Login extends Block {
   public password = 'Admin1234';
 
   constructor() {
-    super();
+    super('div', { events: { submit: (e: Event) => this.submitData(e)} });
 
     this.setChildren({
       login: new LWInput({
@@ -34,8 +34,7 @@ class Login extends Block {
         events: { onChange: event => this.onChangeValue('password', event.target.value) }
       }),
       login_button: new LWButton({
-        buttonText: 'Войти',
-        events: { click: () => this.submitData() }
+        buttonText: 'Войти'
       }),
       open_signin_button: new LWButton({
         buttonText: 'Нет аккаунта?',
@@ -65,7 +64,9 @@ class Login extends Block {
     this[prop] = value;
   }
 
-  public submitData() {
+  public submitData(event: Event) {
+    event.preventDefault();
+
     const dto = {
       login: this.login,
       password: this.password

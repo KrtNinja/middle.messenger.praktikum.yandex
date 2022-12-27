@@ -6,16 +6,20 @@ const template = `
     <div class='signin'>
       <h2>Регистрация</h2>
       <form id='signin-form' action='' method='post' class='signin__form'>
-        {{{ email }}}
-        {{{ login }}}
-        {{{ first_name }}}
-        {{{ second_name }}}
-        {{{ phone }}}
-        {{{ password }}}
-        {{{ repeat_password }}}
+        <div class='signin__form_button_inputs'>
+          {{{ email }}}
+          {{{ login }}}
+          {{{ first_name }}}
+          {{{ second_name }}}
+          {{{ phone }}}
+          {{{ password }}}
+          {{{ repeat_password }}}
+        </div>
+        <div class='signin__form_button'>
+          {{{ registration_button }}}
+        </div>
       </form>
       <div class='signin__actions'>
-        {{{ registration_button }}}
         {{{ open_login_button }}}
       </div>
     </div>

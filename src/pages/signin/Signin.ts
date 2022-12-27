@@ -25,7 +25,7 @@ class SignIn extends Block {
   public repeat_password = 'Admin1234';
 
   constructor() {
-    super();
+    super('div', {events: { submit: (e: Event) => this.submitData(e)}});
 
     this.setChildren({
       email: new LWInput({
@@ -97,7 +97,6 @@ class SignIn extends Block {
       }),
       registration_button: new LWButton({
         buttonText: 'Зарегистрироваться',
-        events: { click: () => this.submitData() }
       }),
       open_login_button: new LWButton({
         buttonText: 'Войти',
@@ -135,7 +134,9 @@ class SignIn extends Block {
     });
   }
 
-  public submitData() {
+  public submitData(event: Event) {
+    event.preventDefault();
+
     const dto = {
       email: this.email,
       login: this.login,
