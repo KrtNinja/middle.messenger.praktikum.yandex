@@ -4,18 +4,26 @@
     width: 100%;
 }
 
-
-.LWInput input {
+.LWInput__input {
     width: 100%;
-    padding: var(--s1) 0;
-    background-color: transparent;
     border: none;
     outline: none;
-    border-bottom: 1px solid var(--grey);
     color: var(--white);
 }
 
-.LWInput input:focus-visible {
+.LWInput__input--default {
+    padding: var(--s1) 0;
+    background-color: transparent;
+    border-bottom: 1px solid var(--grey);
+}
+
+.LWInput__input--contained {
+    padding: var(--s1);
+    background-color: var(--bg-main);
+    border-radius: 5px;
+}
+
+.LWInput__input:focus-visible {
     border-bottom: 1px solid var(--primary);
 }
 

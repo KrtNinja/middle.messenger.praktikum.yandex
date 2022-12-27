@@ -1,0 +1,39 @@
+.chats {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.chats__panel {
+    display: flex;
+    flex-direction: column;
+    width: 310px;
+    height: 100%;
+    border-right: 1px solid var(--grey);
+}
+
+.chats__panel_search {
+    display: flex;
+    align-items: center;
+    padding: var(--s2);
+    height: 60px;
+    background-color: var(--bg-paper);
+}
+
+.chats__panel_list {
+    height: calc(100% - 120px);
+}
+
+.chats__panel_footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: var(--s1);
+    height: 60px;
+    background-color: var(--bg-paper);
+}
+
+.chats__message-area {
+    flex: 1 1 auto;
+    height: 100%;
+}

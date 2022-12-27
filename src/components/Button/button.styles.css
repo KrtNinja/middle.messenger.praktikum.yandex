@@ -13,9 +13,11 @@
 .LWButton--white {
     color: var(--white);
 }
+
 .LWButton--primary {
     color: var(--primary);
 }
+
 .LWButton--error {
     color: var(--error);
 }
@@ -33,6 +35,14 @@
     transform: scale(0.95);
 }
 
-.LWButton__text {
+.LWButton__padding--small p {
+    padding: 5px;
+}
+
+.LWButton__padding--default p {
     padding: 5px 70px;
+}
+
+.LWButton__padding--none p {
+    padding: 0;
 }

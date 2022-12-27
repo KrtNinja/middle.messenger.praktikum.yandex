@@ -1,13 +1,13 @@
 :root {
     /* Colors */
-    --bg-main: #111111;
+    --bg-main: #111;
     --bg-paper: #272727;
     --bg-modal: #11111150;
     --white: #FEFEFE;
     --primary: #29B327;
     --primary50: #29B32750;
     --primary25: #29B32725;
-    --grey: #999999;
+    --grey: #999;
     --error: #FF2F2F;
 
     /* Px per number */
