@@ -41,7 +41,7 @@ export class Message extends Block {
         buttonText: '→',
         variant: 'contained',
         padding: 'none',
-        onClick: () => this.submit()
+        events: { click: () => this.submit() }
       })
     });
   }

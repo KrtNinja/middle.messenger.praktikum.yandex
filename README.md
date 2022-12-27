@@ -65,7 +65,7 @@ class Home extends Block {
       button_name: new LWButton({
         buttonText: 'Моя кнопка',
         // Данная функция будет вызвана событием внутри Button
-        onClick: () => console.log('Произошел клик по кнопке'),
+        events: { click: () => console.log('Произошел клик по кнопке') },
       }),
     });
   }

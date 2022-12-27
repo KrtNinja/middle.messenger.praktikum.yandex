@@ -56,7 +56,7 @@ class Chats extends Block {
         color: 'primary',
         padding: 'small',
         size: 'large',
-        onClick: () => (document.location.href = './profile')
+        events: { click: () => (document.location.href = './profile') }
       }),
       message: new Message({
         name: 'Вадми'

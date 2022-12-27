@@ -37,7 +37,7 @@ export interface ILWButton {
   color?: TColor;
   size?: TSize;
   padding?: TPadding;
-  onClick?: (event: MouseEvent) => void;
+  events?: { click?: (event: MouseEvent) => void; }
 }
 
 const defaultProps = {
@@ -47,7 +47,7 @@ const defaultProps = {
   color: 'white' as TColor,
   size: 'default' as TSize,
   padding: 'default' as TPadding,
-  onClick: () => void 0
+  events: { click: () => void 0 }
 };
 
 export class LWButton extends Block {
@@ -62,18 +62,6 @@ export class LWButton extends Block {
   render() {
     return tmpl;
   }
-
-  public dispatchMountComponent() {
-    this.getElement().addEventListener('click', this.onClickHandler);
-  }
-
-  private onClickHandler: EventListener = (event: MouseEvent) => {
-    if (!this.props.onClick) {
-      return;
-    }
-
-    this.props.onClick(event);
-  };
 
   private getClasses(): string {
     const variant = this.props.variant || defaultProps.variant;

@@ -32,7 +32,7 @@ class Profile extends Block {
         buttonText: 'Выйти',
         variant: 'text',
         color: 'error',
-        onClick: () => (document.location.href = '/login')
+        events: { click: () => (document.location.href = '/login') }
       }),
       ...props
     });

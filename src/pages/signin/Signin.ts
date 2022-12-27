@@ -97,14 +97,14 @@ class SignIn extends Block {
       }),
       registration_button: new LWButton({
         buttonText: 'Зарегистрироваться',
-        onClick: () => this.submitData()
+        events: { click: () => this.submitData() }
       }),
       open_login_button: new LWButton({
         buttonText: 'Войти',
         variant: 'text',
         color: 'primary',
         size: 'small',
-        onClick: () => (document.location.href = '/login')
+        events: { click: () => (document.location.href = '/login') }
       })
     });
   }

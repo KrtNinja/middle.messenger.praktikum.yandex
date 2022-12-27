@@ -35,14 +35,14 @@ class Login extends Block {
       }),
       login_button: new LWButton({
         buttonText: 'Войти',
-        onClick: () => this.submitData()
+        events: { click: () => this.submitData() }
       }),
       open_signin_button: new LWButton({
         buttonText: 'Нет аккаунта?',
         variant: 'text',
         color: 'primary',
         size: 'small',
-        onClick: () => (document.location.href = '/signin')
+        events: { click: () => (document.location.href = '/signin')}
       })
     });
   }

@@ -21,7 +21,7 @@ class ErrorPage extends Block {
         variant: 'text',
         color: 'primary',
         size: 'small',
-        onClick: () => document.location.href = `${finalProps.backUrl}`
+        events: { click: () => document.location.href = `${finalProps.backUrl}` }
       }),
       ...finalProps
     });
