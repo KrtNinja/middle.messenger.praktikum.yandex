@@ -1,10 +1,11 @@
-import template from './signin.tmpl';
-import './signin.styles.css';
+import template from './signUp.tmpl';
+import './signUp.styles.css';
 import Block from '../../services/block';
 import { LWInput } from '../../components/Input/Input';
 import { LWButton } from '../../components/Button/Button';
 import validator from '../../services/validator';
 import router from '../../router';
+import authController from '../../core/controllers/auth/Auth.controller';
 
 type TChangeableKeys =
   | 'email'
@@ -15,15 +16,14 @@ type TChangeableKeys =
   | 'password'
   | 'repeat_password';
 
-class SignIn extends Block {
-  // Временно заполнено тестовыми
-  public email = 'pochta@yandex.ru';
-  public login = 'ivanovivan';
-  public first_name = 'Иван';
-  public second_name = 'Иванов';
-  public phone = '+79991234455';
-  public password = 'Admin1234';
-  public repeat_password = 'Admin1234';
+class SignUp extends Block {
+  public email = 'Test@ya.ru';
+  public login = 'LWTest';
+  public first_name = 'Тест';
+  public second_name = 'Тестов';
+  public phone = '+79990020101';
+  public password = 'LWTest1234';
+  public repeat_password = 'LWTest1234';
 
   constructor() {
     super('div', { events: { submit: (e: Event) => this.submitData(e) } });
@@ -135,7 +135,7 @@ class SignIn extends Block {
     });
   }
 
-  public submitData(event: Event) {
+  public async submitData(event: Event) {
     event.preventDefault();
 
     const dto = {
@@ -144,16 +144,20 @@ class SignIn extends Block {
       first_name: this.first_name,
       second_name: this.second_name,
       phone: this.phone,
-      password: this.password,
-      repeat_password: this.repeat_password
+      password: this.password
     };
 
     if (!this.validateAll()) {
       return;
     }
 
-    console.log(dto);
+    const data = await authController.signUp(dto);
+    if (!data) {
+      return;
+    }
+
+    router.go('/login');
   }
 }
 
-export default SignIn;
+export default SignUp;

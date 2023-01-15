@@ -1,6 +1,6 @@
 import Chats from '../pages/chats/Chats';
 import Login from '../pages/login/Login';
-import SignIn from '../pages/signin/Signin';
+import SignUp from '../pages/signUp/SignUp';
 import Profile from '../pages/profile/Profile';
 import Home from '../pages/home/Home';
 import EditProfile from '../pages/edit-profile/Edit.profile';
@@ -17,7 +17,7 @@ export interface Route {
 export const routes: Route[] = [
   { path: '/', block: Home },
   { path: '/messenger', block: Chats },
-  { path: '/sign-in', block: SignIn },
+  { path: '/sign-up', block: SignUp },
   { path: '/login', block: Login },
   { path: '/profile', block: Profile },
   { path: '/profile/edit', block: EditProfile },

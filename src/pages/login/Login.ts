@@ -5,12 +5,13 @@ import { LWInput } from '../../components/Input/Input';
 import { LWButton } from '../../components/Button/Button';
 import validator from '../../services/validator';
 import router from '../../router';
+import authController from '../../core/controllers/auth/Auth.controller';
 
 type TChangeableKeys = 'login' | 'password';
 
 class Login extends Block {
-  public login = 'ivanovivan';
-  public password = 'Admin1234';
+  public login = '';
+  public password = '';
 
   constructor() {
     super('div', { events: { submit: (e: Event) => this.submitData(e) } });
@@ -42,7 +43,7 @@ class Login extends Block {
         variant: 'text',
         color: 'primary',
         size: 'small',
-        events: { click: () => router.go('/sign-in') }
+        events: { click: () => router.go('/sign-up') }
       })
     });
   }
@@ -65,7 +66,7 @@ class Login extends Block {
     this[prop] = value;
   }
 
-  public submitData(event: Event) {
+  public async submitData(event: Event) {
     event.preventDefault();
 
     const dto = {
@@ -77,7 +78,12 @@ class Login extends Block {
       return;
     }
 
-    console.log(dto);
+    const data = await authController.signIn(dto);
+    if (!data) {
+      return;
+    }
+
+    router.go('/messenger');
   }
 }
 

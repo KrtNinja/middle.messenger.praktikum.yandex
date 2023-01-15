@@ -3,6 +3,7 @@ import './profile.styles.css';
 import Block from '../../services/block';
 import { LWButton } from '../../components/Button/Button';
 import router from '../../router';
+import authController from '../../core/controllers/auth/Auth.controller';
 
 const props = {
   first_name: 'Иван',
@@ -35,7 +36,7 @@ class Profile extends Block {
         buttonText: 'Выйти',
         variant: 'text',
         color: 'error',
-        events: { click: () => router.go('/login') }
+        events: { click: () => this.logout() }
       }),
       ...props
     });
@@ -43,6 +44,16 @@ class Profile extends Block {
 
   render() {
     return template;
+  }
+
+  private async logout() {
+    const data = await authController.logout();
+
+    if (!data) {
+      return;
+    }
+
+    router.go('/login');
   }
 }
 

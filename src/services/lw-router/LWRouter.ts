@@ -7,8 +7,9 @@ class LWRouter {
   private _currentRoute: Route | null;
   private _rootQuery: string;
   private _pathnames: string[];
+  private _onProtectRouteCallback: () => void;
   private _onRouteCallback: () => void;
-  private _unprotectedPaths: `/${string}`[];
+  private _unprotectedPaths: string[];
   static __instance: LWRouter;
 
   constructor(rootQuery: string) {
@@ -23,6 +24,7 @@ class LWRouter {
     this._currentRoute = null;
     this._rootQuery = rootQuery;
     this._onRouteCallback = () => void 0;
+    this._onProtectRouteCallback = () => void 0;
 
     LWRouter.__instance = this;
   }
@@ -71,9 +73,16 @@ class LWRouter {
 
     route.render();
 
-    if (!this._unprotectedPaths.includes(pathname as `/${string}`)) {
-      this._onRouteCallback();
+    this._onRouteCallback();
+
+    if (!this._unprotectedPaths.includes(pathname)) {
+      this._onProtectRouteCallback();
     }
+  }
+
+  public onProtectRoute(callback: () => void) {
+    this._onProtectRouteCallback = callback;
+    return this;
   }
 
   public onRoute(callback: () => void) {
@@ -81,7 +90,7 @@ class LWRouter {
     return this;
   }
 
-  public setUnprotectedPaths(paths: `/${string}`[]) {
+  public setUnprotectedPaths(paths: string[]) {
     this._unprotectedPaths = paths;
     return this;
   }

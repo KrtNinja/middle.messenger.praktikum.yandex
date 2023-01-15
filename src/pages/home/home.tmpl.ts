@@ -9,7 +9,7 @@ const template = `<div class='home'>
       <a href='/login'>Авторизация</a>
     </li>
     <li>
-      <a href='/sign-in'>Регистрация</a>
+      <a href='/sign-up'>Регистрация</a>
     </li>
     <li>
       <a href='/profile'>Профиль</a>
