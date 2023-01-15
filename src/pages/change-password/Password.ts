@@ -4,6 +4,7 @@ import Block from '../../services/block';
 import { LWInput } from '../../components/Input/Input';
 import { LWButton } from '../../components/Button/Button';
 import validator from '../../services/validator';
+import router from '../../router';
 
 type TChangeableKeys = 'prev_password' | 'password' | 'repeat_password';
 
@@ -13,7 +14,7 @@ class Password extends Block {
   public repeat_password = 'Admin1234';
 
   constructor() {
-    super('div', { events: { submit: (e: Event) => this.submitData(e)} });
+    super('div', { events: { submit: (e: Event) => this.submitData(e) } });
 
     this.setChildren({
       prev_password: new LWInput({
@@ -55,7 +56,7 @@ class Password extends Block {
         variant: 'text',
         color: 'primary',
         size: 'small',
-        events: { click: () => (document.location.href = '/profile')}
+        events: { click: () => router.go('/profile') }
       })
     });
   }

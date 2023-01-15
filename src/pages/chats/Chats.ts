@@ -4,6 +4,7 @@ import { LWButton } from '../../components/Button/Button';
 import { LWInput } from '../../components/Input/Input';
 import ChatItem from './components/ChatItem/chat.item';
 import { Message } from './components/message/Message';
+import router from '../../router';
 
 const data = {
   chats: []
@@ -56,10 +57,10 @@ class Chats extends Block {
         color: 'primary',
         padding: 'small',
         size: 'large',
-        events: { click: () => (document.location.href = './profile') }
+        events: { click: () => router.go('/profile') }
       }),
       message: new Message({
-        name: 'Вадми'
+        name: 'Вадим'
       })
     });
   }

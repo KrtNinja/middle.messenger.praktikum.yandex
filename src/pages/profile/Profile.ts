@@ -2,6 +2,7 @@ import template from './profile.tmpl';
 import './profile.styles.css';
 import Block from '../../services/block';
 import { LWButton } from '../../components/Button/Button';
+import router from '../../router';
 
 const props = {
   first_name: 'Иван',
@@ -22,19 +23,19 @@ class Profile extends Block {
         buttonText: 'Изменить данные',
         variant: 'text',
         color: 'primary',
-        events: { click: () => (document.location.href = '/profile/edit') }
+        events: { click: () => router.go('/profile/edit') }
       }),
       change_password_button: new LWButton({
         buttonText: 'Изменить пароль',
         variant: 'text',
         color: 'primary',
-        events: { click: () => (document.location.href = '/profile/password') }
+        events: { click: () => router.go('/profile/password') }
       }),
       exit_button: new LWButton({
         buttonText: 'Выйти',
         variant: 'text',
         color: 'error',
-        events: { click: () => (document.location.href = '/login') }
+        events: { click: () => router.go('/login') }
       }),
       ...props
     });

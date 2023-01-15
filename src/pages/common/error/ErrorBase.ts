@@ -1,19 +1,20 @@
 import template from './error.tmpl';
 import './error.styles.css';
-import Block from '../../services/block';
-import { LWButton } from '../../components/Button/Button';
+import Block from '../../../services/block';
+import { LWButton } from '../../../components/Button/Button';
+import router from '../../../router';
 
-const data = {
+const defaultData = {
   code: '404',
   message: 'Не туда попали',
-  backUrl: '/chats',
+  backUrl: '/messenger',
   linkText: 'Назад к чатам',
   onClick: ''
 };
 
-class ErrorPage extends Block {
+class ErrorBase extends Block {
   constructor(props = {}) {
-    const finalProps = Object.assign(data, props);
+    const finalProps = Object.assign(defaultData, props);
 
     super('div', {
       back_button: new LWButton({
@@ -21,7 +22,7 @@ class ErrorPage extends Block {
         variant: 'text',
         color: 'primary',
         size: 'small',
-        events: { click: () => document.location.href = `${finalProps.backUrl}` }
+        events: { click: () => router.go(finalProps.backUrl) }
       }),
       ...finalProps
     });
@@ -32,4 +33,4 @@ class ErrorPage extends Block {
   }
 }
 
-export default ErrorPage;
+export default ErrorBase;

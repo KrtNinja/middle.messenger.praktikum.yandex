@@ -192,6 +192,23 @@ class Block {
 
     return fragment.content;
   }
+
+  public show() {
+    this.getElement().style.display = 'block';
+  }
+
+  public hide() {
+    this.getElement().style.display = 'none';
+  }
+
+  public destroy() {
+    this.element?.remove();
+    this.onDestroy();
+  }
+
+  public onDestroy(): void {
+    return;
+  }
 }
 
 export default Block;

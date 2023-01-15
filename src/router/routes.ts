@@ -1,21 +1,27 @@
 import Chats from '../pages/chats/Chats';
-import Error from '../pages/error/Error';
 import Login from '../pages/login/Login';
 import SignIn from '../pages/signin/Signin';
 import Profile from '../pages/profile/Profile';
 import Home from '../pages/home/Home';
-import Block from '../services/block';
 import EditProfile from '../pages/edit-profile/Edit.profile';
 import ChangePassword from '../pages/change-password/Password';
+import Error500Page from '../pages/error500/Error500';
+import Error400Page from '../pages/error400/error400';
+import Block from '../services/block';
 
-export const routes: Record<string, Block> = {
-  '/': new Home(),
-  '/chats': new Chats(),
-  '/login': new Login(),
-  '/signin': new SignIn(),
-  '/profile': new Profile(),
-  '/profile/edit': new EditProfile(),
-  '/profile/password': new ChangePassword(),
-  '/404': new Error(),
-  '/500': new Error({ code: '500', message: 'Мы уже фиксим' })
-};
+export interface Route {
+  path: string;
+  block: typeof Block;
+}
+
+export const routes: Route[] = [
+  { path: '/', block: Home },
+  { path: '/messenger', block: Chats },
+  { path: '/sign-in', block: SignIn },
+  { path: '/login', block: Login },
+  { path: '/profile', block: Profile },
+  { path: '/profile/edit', block: EditProfile },
+  { path: '/profile/password', block: ChangePassword },
+  { path: '/500', block: Error500Page },
+  { path: '*', block: Error400Page },
+];

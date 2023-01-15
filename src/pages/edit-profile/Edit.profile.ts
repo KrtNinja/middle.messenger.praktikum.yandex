@@ -4,14 +4,9 @@ import Block from '../../services/block';
 import { LWInput } from '../../components/Input/Input';
 import { LWButton } from '../../components/Button/Button';
 import validator from '../../services/validator';
+import router from '../../router';
 
-type TChangeableKeys =
-  | 'email'
-  | 'login'
-  | 'first_name'
-  | 'second_name'
-  | 'nickname'
-  | 'phone'
+type TChangeableKeys = 'email' | 'login' | 'first_name' | 'second_name' | 'nickname' | 'phone';
 
 class EditProfile extends Block {
   public email = 'pochta@yandex.ru';
@@ -22,7 +17,7 @@ class EditProfile extends Block {
   public phone = '+79991234455';
 
   constructor() {
-    super('div', { events: { submit: (e: Event) => this.submitData(e)} });
+    super('div', { events: { submit: (e: Event) => this.submitData(e) } });
 
     this.setChildren({
       email: new LWInput({
@@ -86,7 +81,7 @@ class EditProfile extends Block {
         variant: 'text',
         color: 'primary',
         size: 'small',
-        events: { click: () => (document.location.href = '/profile')}
+        events: { click: () => router.go('/profile') }
       })
     });
   }

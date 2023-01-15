@@ -4,6 +4,7 @@ import Block from '../../services/block';
 import { LWInput } from '../../components/Input/Input';
 import { LWButton } from '../../components/Button/Button';
 import validator from '../../services/validator';
+import router from '../../router';
 
 type TChangeableKeys = 'login' | 'password';
 
@@ -12,7 +13,7 @@ class Login extends Block {
   public password = 'Admin1234';
 
   constructor() {
-    super('div', { events: { submit: (e: Event) => this.submitData(e)} });
+    super('div', { events: { submit: (e: Event) => this.submitData(e) } });
 
     this.setChildren({
       login: new LWInput({
@@ -41,7 +42,7 @@ class Login extends Block {
         variant: 'text',
         color: 'primary',
         size: 'small',
-        events: { click: () => (document.location.href = '/signin')}
+        events: { click: () => router.go('/sign-in') }
       })
     });
   }

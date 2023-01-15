@@ -4,6 +4,7 @@ import Block from '../../services/block';
 import { LWInput } from '../../components/Input/Input';
 import { LWButton } from '../../components/Button/Button';
 import validator from '../../services/validator';
+import router from '../../router';
 
 type TChangeableKeys =
   | 'email'
@@ -25,7 +26,7 @@ class SignIn extends Block {
   public repeat_password = 'Admin1234';
 
   constructor() {
-    super('div', {events: { submit: (e: Event) => this.submitData(e)}});
+    super('div', { events: { submit: (e: Event) => this.submitData(e) } });
 
     this.setChildren({
       email: new LWInput({
@@ -96,14 +97,14 @@ class SignIn extends Block {
         events: { onChange: event => this.onChangeValue('repeat_password', event.target.value) }
       }),
       registration_button: new LWButton({
-        buttonText: 'Зарегистрироваться',
+        buttonText: 'Зарегистрироваться'
       }),
       open_login_button: new LWButton({
         buttonText: 'Войти',
         variant: 'text',
         color: 'primary',
         size: 'small',
-        events: { click: () => (document.location.href = '/login') }
+        events: { click: () => router.go('/login') }
       })
     });
   }
