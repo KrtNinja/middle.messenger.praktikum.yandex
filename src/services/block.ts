@@ -38,7 +38,7 @@ class Block {
 
   private _init(): void {
     this.createResources();
-    this.eventBus.emit(this.EVENTS.FLOW_RENDER);
+    this.eventBus.emit(this.EVENTS.FLOW_CDM);
   }
 
   private createResources(): void {
@@ -50,13 +50,14 @@ class Block {
   }
 
   private _componentDidMount(): void {
+    this.dispatchMountComponent();
     Object.values(this.children).forEach(child => {
       child.dispatchMountComponent();
     });
   }
 
   public dispatchMountComponent(): void {
-    this.eventBus.emit(this.EVENTS.FLOW_CDM);
+    this.eventBus.emit(this.EVENTS.FLOW_RENDER);
   }
 
   public componentDidUpdate(oldProps?: TProps, newProps?: TProps) {
@@ -126,6 +127,10 @@ class Block {
     }
 
     Object.assign(this.props, newProps);
+  }
+
+  public getProps(): TProps {
+    return this.props;
   }
 
   public getElement(): HTMLElement {

@@ -9,7 +9,8 @@ const errors: Record<string, string> = {
   'Cookie is not valid': 'Вы не авторизованы. Войдите или зарегистрируйтесь',
   'phone is not valid': 'Неверный формат телефона',
   'No chat': 'Не выбран чат',
-  'Login or password is incorrect': 'Неправильный логин или пароль'
+  'Login or password is incorrect': 'Неправильный логин или пароль',
+  'Password is incorrect': 'Неверный пароль'
 };
 
 export function errorHandler(error: XMLHttpRequest) {

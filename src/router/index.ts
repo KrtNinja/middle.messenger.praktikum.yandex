@@ -1,11 +1,14 @@
 import { routes } from './routes';
 import LWRouter from '../services/lw-router/LWRouter';
 import authController from '../core/controllers/auth/Auth.controller';
+import { globalStore } from '../store/global.store';
 
 const router = new LWRouter('#root');
 
 async function checkUser() {
   const user = await authController.getUserInfo();
+
+  globalStore.setState({ user });
 
   if (!user) {
     router.go('/login');

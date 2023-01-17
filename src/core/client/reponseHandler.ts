@@ -1,4 +1,6 @@
 export function responseHandler(request: XMLHttpRequest) {
-  console.log(request.response);
-  return request.response;
+  if (request.response === 'OK') {
+    return request.response;
+  }
+  return JSON.parse(request.response);
 }

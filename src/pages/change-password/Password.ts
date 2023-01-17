@@ -5,14 +5,12 @@ import { LWInput } from '../../components/Input/Input';
 import { LWButton } from '../../components/Button/Button';
 import validator from '../../services/validator';
 import router from '../../router';
+import userController from '../../core/controllers/user/User.controller';
+import { snackbar } from '../../services/snackbar';
 
 type TChangeableKeys = 'prev_password' | 'password' | 'repeat_password';
 
 class Password extends Block {
-  public prev_password = 'QWERTY1234';
-  public password = 'Admin1234';
-  public repeat_password = 'Admin1234';
-
   constructor() {
     super('div', { events: { submit: (e: Event) => this.submitData(e) } });
 
@@ -21,32 +19,28 @@ class Password extends Block {
         type: 'password',
         name: 'prev_password',
         label: 'Старый пароль',
-        required: true,
-        value: this.prev_password,
-        // validateRule: ,
-        events: { onChange: event => this.onChangeValue('prev_password', event.target.value) }
+        value: '',
+        validateRule: validator.rules.password
       }),
       password: new LWInput({
         type: 'password',
         name: 'password',
         label: 'Новый пароль',
         required: true,
-        value: this.password,
-        validateRule: validator.rules.password,
-        events: { onChange: event => this.onChangeValue('password', event.target.value) }
+        value: '',
+        validateRule: validator.rules.password
       }),
       repeat_password: new LWInput({
         type: 'password',
         name: 'repeat_password',
         label: 'Повторите пароль',
         required: true,
-        value: this.repeat_password,
+        value: '',
         validateRule: {
           pattern: this.getRepeatPasswordPattern,
           required: true,
           msg: 'Обязательное поле. Должно совпадать с паролем'
-        },
-        events: { onChange: event => this.onChangeValue('repeat_password', event.target.value) }
+        }
       }),
       save_button: new LWButton({
         buttonText: 'Изменить'
@@ -65,6 +59,10 @@ class Password extends Block {
     return template;
   }
 
+  private getChildValue(prop: TChangeableKeys) {
+    return this.children[prop]?.getProps().value;
+  }
+
   private validateAll(): boolean {
     return Object.values(this.children).every(child => {
       if (child instanceof LWInput) {
@@ -76,27 +74,29 @@ class Password extends Block {
   }
 
   private getRepeatPasswordPattern = () => {
-    return `^${this.password}$`;
+    return `^${this.getChildValue('password')}$`;
   };
 
-  private onChangeValue(prop: TChangeableKeys, value: string) {
-    this[prop] = value;
-  }
-
-  public submitData(event: Event) {
+  public async submitData(event: Event) {
     event.preventDefault();
 
     const dto = {
-      prev_password: this.prev_password,
-      password: this.password,
-      repeat_password: this.repeat_password
+      oldPassword: this.getChildValue('prev_password'),
+      newPassword: this.getChildValue('password')
     };
 
     if (!this.validateAll()) {
       return;
     }
 
-    console.log(dto);
+    const data = await userController.changePassword(dto);
+
+    if (!data) {
+      return;
+    }
+
+    snackbar.open('Пароль успешно изменен', 'success');
+    router.go('/profile');
   }
 }
 
