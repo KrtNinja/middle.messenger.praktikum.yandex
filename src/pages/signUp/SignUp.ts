@@ -17,13 +17,13 @@ type TChangeableKeys =
   | 'repeat_password';
 
 class SignUp extends Block {
-  public email = 'Test@ya.ru';
-  public login = 'LWTest';
-  public first_name = 'Тест';
-  public second_name = 'Тестов';
-  public phone = '+79990020101';
-  public password = 'LWTest1234';
-  public repeat_password = 'LWTest1234';
+  public email = '';
+  public login = '';
+  public first_name = '';
+  public second_name = '';
+  public phone = '';
+  public password = '';
+  public repeat_password = '';
 
   constructor() {
     super('div', { events: { submit: (e: Event) => this.submitData(e) } });

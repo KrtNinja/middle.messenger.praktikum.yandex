@@ -17,7 +17,7 @@ class ChatItem extends Block {
   constructor(props: IChatItemProps) {
     super('div', {
       ...props,
-      date: formatDate(props.date),
+      date: props.date ? formatDate(props.date) : '',
       msg: cutMessage(props.msg)
     });
   }
