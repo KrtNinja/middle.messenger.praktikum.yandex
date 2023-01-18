@@ -14,6 +14,10 @@ export class ChatsController {
   public createChat(title: string) {
     return this.client.post(url, { title });
   }
+
+  public deleteChat(chatId: string) {
+    return this.client.delete(url, { chatId });
+  }
 }
 
 export default new ChatsController(httpClient);

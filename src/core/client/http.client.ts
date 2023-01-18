@@ -40,9 +40,9 @@ export class HttpClient {
       .catch(errorHandler);
   }
 
-  public delete(url: string) {
+  public delete<T>(url: string, data: T) {
     return this.http
-      .delete(url, { ...defaultOptions })
+      .delete(url, { ...defaultOptions, data })
       .then(responseHandler)
       .catch(errorHandler);
   }

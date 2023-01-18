@@ -7,6 +7,7 @@ import { globalStore } from '../../../../store/global.store';
 import ChatDto from '../../../../core/dto/Chat.dto';
 import { apiConfig } from '../../../../core/contants/Api';
 import ava from '../../../../../public/images/avatar.png';
+import chatsController from '../../../../core/controllers/chats/Chats.controller';
 
 interface IMessage {
   name: string;
@@ -19,10 +20,12 @@ export class Message extends Block {
     super('div', props);
 
     this.setChildren({
-      more_button: new LWButton({
-        buttonText: '⋮',
-        variant: 'contained',
-        padding: 'none'
+      delete_chat: new LWButton({
+        buttonText: 'Удалить чат',
+        variant: 'text',
+        color: 'error',
+        padding: 'none',
+        events: { click: () => this.deleteChat() }
       }),
       message_input: new LWInput({
         label: '',
@@ -60,6 +63,13 @@ export class Message extends Block {
     globalStore.subscribe(({ chats, chatId }) => {
       const currentChat = chats.find((chat: ChatDto) => chat.id == chatId);
       const img = currentChat?.avatar ? `${apiConfig.RESOURCES}${currentChat.avatar}` : ava;
+
+      if (chatId) {
+        this.children.delete_chat?.show();
+      } else {
+        this.children.delete_chat?.hide();
+      }
+
       this.setProps({
         srcImg: img,
         name: currentChat?.title || 'Выберите чат из списка'
@@ -97,5 +107,19 @@ export class Message extends Block {
     console.log(dto);
     this.messageToSend = '';
     this.children.message_input.updatePropValue('value', '');
+  }
+
+  public async deleteChat() {
+    const data = await chatsController.deleteChat(globalStore.state.chatId);
+
+    if (!data) {
+      return;
+    }
+
+    localStorage.removeItem('chatId');
+    globalStore.setState({ chatId: null });
+
+    const chats = (await chatsController.getChats()) || [];
+    globalStore.setState({ chats });
   }
 }

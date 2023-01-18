@@ -32,7 +32,7 @@
     overflow: hidden;
 }
 
-.message__header-action button, .message__input button {
+.message__input button {
     border-radius: 12px;
     font-size: 20px;
     height: 25px;

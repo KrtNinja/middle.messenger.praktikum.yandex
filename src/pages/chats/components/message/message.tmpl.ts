@@ -10,7 +10,7 @@ const template = `
       <div class='message__header-person_name'>{{ name }}</div>
     </div>
     <div class='message__header-action'>
-      {{{ more_button }}}
+      {{{ delete_chat }}}
      </div>
   </div>
   <div class='message__content'>

@@ -89,9 +89,7 @@ class Chats extends Block {
     });
   }
 
-  private async getChats() {
-    const chats = (await chatsController.getChats()) || [];
-    globalStore.setState({ chats });
+  private async completeChats(chats: ChatDto[]) {
     const chatBlocks = chats.map(chatInfo => this.createChatItem(chatInfo));
 
     this.setChatIds(chatBlocks);
@@ -105,7 +103,11 @@ class Chats extends Block {
       if (!data) {
         return;
       }
-      await this.getChats();
+
+      const chats = (await chatsController.getChats()) || [];
+      globalStore.setState({ chats });
+
+      await this.completeChats(chats);
       this.children.add_new_chat.updatePropValue('value', ' ');
       this.children.add_new_chat.updatePropValue('value', '');
     }
@@ -115,13 +117,19 @@ class Chats extends Block {
     return template;
   }
 
-  dispatchMountComponent() {
+  async dispatchMountComponent() {
     super.dispatchMountComponent();
 
-    this.getChats().catch();
+    const chats = (await chatsController.getChats()) || [];
+    globalStore.setState({ chats });
+
     if (localStorage.getItem('chatId')) {
       globalStore.setState({ chatId: localStorage.getItem('chatId') });
     }
+
+    globalStore.subscribe(({chats}) => {
+      this.completeChats(chats);
+    });
   }
 }
 
