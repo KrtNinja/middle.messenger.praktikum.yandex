@@ -16,10 +16,15 @@
 }
 
 .chat-item__avatar {
-    min-width: 50px;
-    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
     background-color: var(--primary25);
     border-radius: 25px;
+    position: relative;
+    overflow: hidden;
 }
 
 .chat-item__info {

@@ -2,11 +2,13 @@ import Block from '../../../../services/block';
 import template from './chat.tmpl';
 import './chat.item.css';
 import formatDate from '../../../../utils/formatDate';
+import ava from '../../../../../public/images/avatar.png';
 
 export interface IChatItemProps {
   name: string;
   msg: string;
   date: string;
+  srcImg?: string;
 }
 
 function cutMessage(msg: string): string {
@@ -18,7 +20,8 @@ class ChatItem extends Block {
     super('div', {
       ...props,
       date: props.date ? formatDate(props.date) : '',
-      msg: cutMessage(props.msg)
+      msg: cutMessage(props.msg),
+      srcImg: props.srcImg || ava
     });
   }
 

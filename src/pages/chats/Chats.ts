@@ -7,6 +7,7 @@ import { Message } from './components/message/Message';
 import router from '../../router';
 import chatsController from '../../core/controllers/chats/Chats.controller';
 import ChatDto from '../../core/dto/Chat.dto';
+import { apiConfig } from '../../core/contants/Api';
 
 const props = {
   chats: []
@@ -53,10 +54,12 @@ class Chats extends Block {
   }
 
   private createChatItem(chatInfo: ChatDto): Block {
+    const img = chatInfo.avatar ? `${apiConfig.RESOURCES}${chatInfo.avatar}` : '';
     const block = new ChatItem({
       name: chatInfo.title,
       msg: chatInfo.last_message?.content || '',
-      date: chatInfo.last_message?.time
+      date: chatInfo.last_message?.time,
+      srcImg: img
     });
     block.id = chatInfo.id.toString();
     return block;
