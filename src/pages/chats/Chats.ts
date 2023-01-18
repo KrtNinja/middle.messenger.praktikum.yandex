@@ -49,7 +49,7 @@ class Chats extends Block {
         events: { click: () => router.go('/profile') }
       }),
       message: new Message({
-        name: 'Вадим'
+        name: ''
       })
     });
   }
@@ -91,6 +91,7 @@ class Chats extends Block {
 
   private async getChats() {
     const chats = (await chatsController.getChats()) || [];
+    globalStore.setState({ chats });
     const chatBlocks = chats.map(chatInfo => this.createChatItem(chatInfo));
 
     this.setChatIds(chatBlocks);

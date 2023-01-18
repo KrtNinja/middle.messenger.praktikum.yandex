@@ -3,6 +3,10 @@ import './message.css';
 import Block from '../../../../services/block';
 import { LWButton } from '../../../../components/Button/Button';
 import { LWInput } from '../../../../components/Input/Input';
+import { globalStore } from '../../../../store/global.store';
+import ChatDto from '../../../../core/dto/Chat.dto';
+import { apiConfig } from '../../../../core/contants/Api';
+import ava from '../../../../../public/images/avatar.png';
 
 interface IMessage {
   name: string;
@@ -48,6 +52,19 @@ export class Message extends Block {
 
   render() {
     return template;
+  }
+
+  dispatchMountComponent() {
+    super.dispatchMountComponent();
+
+    globalStore.subscribe(({ chats, chatId }) => {
+      const currentChat = chats.find((chat: ChatDto) => chat.id == chatId);
+      const img = currentChat?.avatar ? `${apiConfig.RESOURCES}${currentChat.avatar}` : ava;
+      this.setProps({
+        srcImg: img,
+        name: currentChat?.title || 'Выберите чат из списка'
+      });
+    });
   }
 
   private onKeyDown = (e: KeyboardEvent) => {
