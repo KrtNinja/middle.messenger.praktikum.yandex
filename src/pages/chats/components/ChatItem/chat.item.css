@@ -5,6 +5,11 @@
     height: 72px;
     padding: var(--s1);
     position: relative;
+    cursor: pointer;
+}
+
+.chat-item--selected {
+    background-color: var(--primary25);
 }
 
 .chat-item::after {

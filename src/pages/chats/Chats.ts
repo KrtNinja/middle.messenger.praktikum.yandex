@@ -8,6 +8,7 @@ import router from '../../router';
 import chatsController from '../../core/controllers/chats/Chats.controller';
 import ChatDto from '../../core/dto/Chat.dto';
 import { apiConfig } from '../../core/contants/Api';
+import { globalStore } from '../../store/global.store';
 
 const props = {
   chats: []
@@ -56,10 +57,17 @@ class Chats extends Block {
   private createChatItem(chatInfo: ChatDto): Block {
     const img = chatInfo.avatar ? `${apiConfig.RESOURCES}${chatInfo.avatar}` : '';
     const block = new ChatItem({
+      chatId: chatInfo.id.toString(),
       name: chatInfo.title,
       msg: chatInfo.last_message?.content || '',
       date: chatInfo.last_message?.time,
-      srcImg: img
+      srcImg: img,
+      events: {
+        click: () => {
+          globalStore.setState({ chatId: chatInfo.id });
+          localStorage.setItem('chatId', chatInfo.id.toString());
+        }
+      }
     });
     block.id = chatInfo.id.toString();
     return block;
@@ -110,6 +118,9 @@ class Chats extends Block {
     super.dispatchMountComponent();
 
     this.getChats().catch();
+    if (localStorage.getItem('chatId')) {
+      globalStore.setState({ chatId: localStorage.getItem('chatId') });
+    }
   }
 }
 
