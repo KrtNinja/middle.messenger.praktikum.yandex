@@ -43,7 +43,7 @@ export class Http {
     return this.request(url, { ...options, method: METHODS.DELETE });
   }
 
-  request = (url: string, options: TRequestOptions) => {
+  async request(url: string, options: TRequestOptions) {
     const { method = METHODS.GET, headers = {}, data, timeout = 5000 } = options;
 
     // Если метод GET и передана data, трансформировать data в query запрос
@@ -74,11 +74,16 @@ export class Http {
 
       if (method === METHODS.GET || !data) {
         xhr.send();
-      } else {
-        xhr.send(JSON.stringify(data));
+        return;
       }
+      if (data instanceof FormData) {
+        xhr.send(data);
+        return;
+      }
+
+      xhr.send(JSON.stringify(data));
     });
-  };
+  }
 }
 
 export default new Http();

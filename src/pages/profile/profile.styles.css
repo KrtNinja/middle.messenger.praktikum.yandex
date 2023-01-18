@@ -26,7 +26,20 @@
     overflow: hidden;
 }
 
-.profile__avatar-icon:hover:before {
+.profile__avatar-icon_input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+
+.profile__avatar-icon_input:hover {
+    cursor: pointer;
+}
+
+.profile__avatar-icon:hover::before {
     display: flex;
     content: 'Поменять аватар';
     height: 100%;
@@ -36,7 +49,7 @@
     text-align: center;
     background-color: var(--bg-modal);
     cursor: pointer;
-    animation: scaleIn 150ms ease-in-out;
+    animation: scale-in 150ms ease-in-out;
 }
 
 .profile__info-list {
@@ -67,10 +80,11 @@
     align-items: center;
 }
 
-@keyframes scaleIn {
+@keyframes scale-in {
     from {
         transform: scale(0);
     }
+
     to {
         transform: scale(1);
     }

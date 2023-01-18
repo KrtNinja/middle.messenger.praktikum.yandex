@@ -5,8 +5,13 @@ import { LWButton } from '../../components/Button/Button';
 import router from '../../router';
 import authController from '../../core/controllers/auth/Auth.controller';
 import { globalStore } from '../../store/global.store';
+import avatar from '../../../public/images/avatar.png';
+import userController from '../../core/controllers/user/User.controller';
+import { snackbar } from '../../services/snackbar';
+import { apiConfig } from '../../core/contants/Api';
 
 const props = {
+  srcImg: avatar,
   first_name: 'Иван',
   infoList: [
     { key: 'email', name: 'Почта', value: 'pochta@yandex.ru' },
@@ -39,6 +44,16 @@ class Profile extends Block {
         color: 'error',
         events: { click: () => this.logout() }
       }),
+      events: {
+        change: (evt: InputEvent) => {
+          const { files }: { files: FileList | null } = evt.target as HTMLInputElement;
+          if (!files?.length) {
+            return;
+          }
+          const [file] = files;
+          this.uploadFile(file).catch();
+        }
+      },
       ...props
     });
   }
@@ -47,13 +62,35 @@ class Profile extends Block {
     return template;
   }
 
+  private async uploadFile(file: File) {
+    const formData = new FormData();
+    formData.set('avatar', file);
+    const data = await userController.changeUserAvatar(formData);
+
+    if (!data) {
+      return;
+    }
+
+    snackbar.open('Аватар успешно загружен на сервер', 'success');
+    this.updatePropValue('srcImg', `${apiConfig.RESOURCES}${data.avatar}`);
+  }
+
   dispatchMountComponent() {
     super.dispatchMountComponent();
 
-    globalStore.subscribe(({ user }) => {
+    globalStore.subscribe(async ({ user }) => {
+      if (user?.avatar) {
+        this.updatePropValue('srcImg', `${apiConfig.RESOURCES}${user.avatar}`);
+      }
+
       this.setProps({
         first_name: user?.first_name,
-        infoList: this.getProps().infoList.map((item: {key: string, name: string, value: string}) => ({...item, value: user?.[item.key] || ''}))
+        infoList: this.getProps().infoList.map(
+          (item: { key: string; name: string; value: string }) => ({
+            ...item,
+            value: user?.[item.key] || ''
+          })
+        )
       });
     });
   }

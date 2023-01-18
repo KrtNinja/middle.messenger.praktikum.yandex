@@ -15,6 +15,7 @@ const errors: Record<string, string> = {
 
 export function errorHandler(error: XMLHttpRequest) {
   if (!error.response) {
+    console.error(error);
     return router.go('/500');
   }
   const { reason } = JSON.parse(error.response);

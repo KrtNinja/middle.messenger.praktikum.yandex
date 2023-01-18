@@ -26,9 +26,9 @@ export class HttpClient {
       .catch(errorHandler);
   }
 
-  public put<T>(url: string, data: T): Promise<T | null> {
+  public put<T, R>(url: string, data: T, options = {}): Promise<R | null> {
     return this.http
-      .put(url, { ...defaultOptions, data })
+      .put(url, { ...defaultOptions, data, ...options })
       .then(responseHandler)
       .catch(errorHandler);
   }
