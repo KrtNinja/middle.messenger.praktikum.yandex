@@ -26,6 +26,10 @@ export class ChatsController {
   public deleteUserFromChat(chatId: string, userId: number) {
     return this.client.delete(`${url}/users`, { users: [userId], chatId });
   }
+
+  public getToken(chatId: string): Promise<{token: string} | null> {
+    return this.client.post(`${url}/token/${chatId}`, {});
+  }
 }
 
 export default new ChatsController(httpClient);

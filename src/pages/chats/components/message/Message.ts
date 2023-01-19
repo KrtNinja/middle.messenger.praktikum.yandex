@@ -11,6 +11,7 @@ import chatsController from '../../../../core/controllers/chats/Chats.controller
 import { snackbar } from '../../../../services/snackbar';
 import userController from '../../../../core/controllers/user/User.controller';
 import UserDto from '../../../../core/dto/User.dto';
+import messagesWs from '../../../../core/controllers/ws/Messages.ws';
 
 interface IMessage {
   name: string;
@@ -18,6 +19,9 @@ interface IMessage {
 
 export class Message extends Block {
   public messageToSend = '';
+  public user: UserDto | null = null;
+  public chatId = null;
+  public chats = [];
 
   constructor(props: IMessage) {
     super('div', props);
@@ -85,8 +89,31 @@ export class Message extends Block {
   dispatchMountComponent() {
     super.dispatchMountComponent();
 
-    globalStore.subscribe(({ chats, chatId }) => {
+    globalStore.subscribe(async ({ messages }) => {
+      console.log(messages);
+    });
+
+    globalStore.subscribe(async ({ chatId, user }) => {
+      const userId = user?.id;
+      if (userId == null || chatId === this.chatId) {
+        messagesWs.leave();
+        return;
+      }
+      this.chatId = chatId;
+
+      const token = (await chatsController.getToken(chatId))?.token;
+      if (token) {
+        messagesWs.connect({
+          userId,
+          chatId,
+          token
+        });
+      }
+    });
+
+    globalStore.subscribe(async ({ chats, chatId }) => {
       const currentChat = chats.find((chat: ChatDto) => chat.id == chatId);
+
       const img = currentChat?.avatar ? `${apiConfig.RESOURCES}${currentChat.avatar}` : ava;
 
       if (chatId) {
