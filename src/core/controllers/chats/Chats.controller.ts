@@ -18,6 +18,14 @@ export class ChatsController {
   public deleteChat(chatId: string) {
     return this.client.delete(url, { chatId });
   }
+
+  public addUserToChat(chatId: string, userId: number) {
+    return this.client.put(`${url}/users`, { users: [userId], chatId });
+  }
+
+  public deleteUserFromChat(chatId: string, userId: number) {
+    return this.client.delete(`${url}/users`, { users: [userId], chatId });
+  }
 }
 
 export default new ChatsController(httpClient);

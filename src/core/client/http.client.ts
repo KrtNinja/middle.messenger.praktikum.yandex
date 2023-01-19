@@ -19,7 +19,7 @@ export class HttpClient {
       .catch(errorHandler);
   }
 
-  public post<T>(url: string, data: T): Promise<T | null> {
+  public post<T, D>(url: string, data: D): Promise<T | null> {
     return this.http
       .post(url, { ...defaultOptions, data })
       .then(responseHandler)

@@ -19,6 +19,10 @@ export class UserController {
   public changePassword(dto: { oldPassword: string; newPassword: string }) {
     return this.client.put(`${url}/password`, dto);
   }
+
+  public searchUser(login: string): Promise<UserDto[] | null> {
+    return this.client.post(`${url}/search`, { login });
+  }
 }
 
 export default new UserController(httpClient);

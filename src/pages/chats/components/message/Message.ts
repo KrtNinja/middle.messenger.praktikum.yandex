@@ -8,6 +8,9 @@ import ChatDto from '../../../../core/dto/Chat.dto';
 import { apiConfig } from '../../../../core/contants/Api';
 import ava from '../../../../../public/images/avatar.png';
 import chatsController from '../../../../core/controllers/chats/Chats.controller';
+import { snackbar } from '../../../../services/snackbar';
+import userController from '../../../../core/controllers/user/User.controller';
+import UserDto from '../../../../core/dto/User.dto';
 
 interface IMessage {
   name: string;
@@ -20,6 +23,28 @@ export class Message extends Block {
     super('div', props);
 
     this.setChildren({
+      add_user: new LWInput({
+        label: '',
+        type: 'text',
+        name: 'add-user',
+        value: '',
+        variant: 'contained',
+        placeholder: 'Логин для добавления',
+        events: {
+          keydown: (e: KeyboardEvent & { target: { value: string } }) => this.addUserToChat(e)
+        }
+      }),
+      remove_user: new LWInput({
+        label: '',
+        type: 'text',
+        name: 'remove-user',
+        value: '',
+        variant: 'contained',
+        placeholder: 'Логин для удаления',
+        events: {
+          keydown: (e: KeyboardEvent & { target: { value: string } }) => this.removeUserFromChat(e)
+        }
+      }),
       delete_chat: new LWButton({
         buttonText: 'Удалить чат',
         variant: 'text',
@@ -66,8 +91,12 @@ export class Message extends Block {
 
       if (chatId) {
         this.children.delete_chat?.show();
+        this.children.add_user?.show();
+        this.children.remove_user?.show();
       } else {
         this.children.delete_chat?.hide();
+        this.children.add_user?.hide();
+        this.children.remove_user?.hide();
       }
 
       this.setProps({
@@ -93,6 +122,63 @@ export class Message extends Block {
 
       return true;
     });
+  }
+
+  private async searchUser(login: string): Promise<UserDto | null> {
+    const users = (await userController.searchUser(login)) || [];
+
+    if (users.length === 0) {
+      snackbar.open(`Пользователь с логином ${login} не найден`);
+      return null;
+    }
+    if (users.length > 1) {
+      snackbar.open('Укажите логин полностью');
+      return null;
+    }
+
+    return users[0];
+  }
+
+  public async addUserToChat(e: KeyboardEvent & { target: { value: string } }) {
+    if (e.key === 'Enter') {
+      const { chatId } = globalStore.state;
+      const user = await this.searchUser(e.target.value);
+
+      if (!user) {
+        return;
+      }
+
+      const data = await chatsController.addUserToChat(chatId, user.id);
+
+      if (!data) {
+        return;
+      }
+
+      snackbar.open(`Пользователь ${e.target.value} добавлен в чат`, 'success');
+      this.children.add_user.updatePropValue('value', ' ');
+      this.children.add_user.updatePropValue('value', '');
+    }
+  }
+
+  public async removeUserFromChat(e: KeyboardEvent & { target: { value: string } }) {
+    if (e.key === 'Enter') {
+      const { chatId } = globalStore.state;
+      const user = await this.searchUser(e.target.value);
+
+      if (!user) {
+        return;
+      }
+
+      const data = await chatsController.deleteUserFromChat(chatId, user.id);
+
+      if (!data) {
+        return;
+      }
+
+      snackbar.open(`Пользователь ${e.target.value} удален из чата`, 'success');
+      this.children.remove_user.updatePropValue('value', ' ');
+      this.children.remove_user.updatePropValue('value', '');
+    }
   }
 
   public submit() {
