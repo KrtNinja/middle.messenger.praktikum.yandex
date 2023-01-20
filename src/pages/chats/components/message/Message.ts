@@ -12,6 +12,8 @@ import { snackbar } from '../../../../services/snackbar';
 import userController from '../../../../core/controllers/user/User.controller';
 import UserDto from '../../../../core/dto/User.dto';
 import messagesWs from '../../../../core/controllers/ws/Messages.ws';
+import MessageDto from '../../../../core/dto/Message.dto';
+import { SingleMessage } from './single-message/Single.message';
 
 interface IMessage {
   name: string;
@@ -22,9 +24,10 @@ export class Message extends Block {
   public user: UserDto | null = null;
   public chatId = null;
   public chats = [];
+  public messages: MessageDto[] = [];
 
   constructor(props: IMessage) {
-    super('div', props);
+    super('div', { ...props, messages: [] });
 
     this.setChildren({
       add_user: new LWInput({
@@ -59,15 +62,10 @@ export class Message extends Block {
       message_input: new LWInput({
         label: '',
         type: 'text',
-        name: 'search',
+        name: 'message_input',
         value: '',
         variant: 'contained',
         placeholder: 'Сообщение',
-        validateRule: {
-          pattern: '',
-          msg: '',
-          required: true
-        },
         events: {
           onChange: e => (this.messageToSend = e.target.value),
           keydown: this.onKeyDown
@@ -90,13 +88,22 @@ export class Message extends Block {
     super.dispatchMountComponent();
 
     globalStore.subscribe(async ({ messages }) => {
-      console.log(messages);
+      if (this.messages?.length === messages.length) {
+        return;
+      }
+
+      this.messages = messages;
+      this.completeMessages(messages);
+
+      const chats = (await chatsController.getChats()) || [];
+      globalStore.setState({ chats });
+
+      document.getElementsByName('message_input')[0].focus();
     });
 
     globalStore.subscribe(async ({ chatId, user }) => {
       const userId = user?.id;
       if (userId == null || chatId === this.chatId) {
-        messagesWs.leave();
         return;
       }
       this.chatId = chatId;
@@ -133,6 +140,23 @@ export class Message extends Block {
     });
   }
 
+  private setMessageIds(messages: SingleMessage[]) {
+    this.updatePropValue(
+      'messages',
+      messages.map(block => block.id)
+    );
+  }
+
+  private createSingleMessage(messageInfo: MessageDto): Block {
+    const block = new SingleMessage({
+      content: messageInfo.content,
+      mine: messageInfo.user_id === globalStore.state.user.id,
+      time: messageInfo.time
+    });
+    block.id = messageInfo.id.toString();
+    return block;
+  }
+
   private onKeyDown = (e: KeyboardEvent) => {
     if (e.key !== 'Enter') {
       return;
@@ -141,14 +165,20 @@ export class Message extends Block {
     this.submit();
   };
 
-  private validateAll(): boolean {
-    return Object.values(this.children).every(child => {
-      if (child instanceof LWInput) {
-        return child.validate();
-      }
-
-      return true;
+  private addMessages(messages: SingleMessage[]) {
+    this.setChildren({
+      ...messages.reduce((acc: Record<string, SingleMessage>, curr) => {
+        acc[curr.id] = curr;
+        return acc;
+      }, {})
     });
+  }
+
+  private completeMessages(messages: MessageDto[]) {
+    const messageBlocks = messages.map(messageInfo => this.createSingleMessage(messageInfo));
+
+    this.setMessageIds(messageBlocks);
+    this.addMessages(messageBlocks);
   }
 
   private async searchUser(login: string): Promise<UserDto | null> {
@@ -209,16 +239,13 @@ export class Message extends Block {
   }
 
   public submit() {
-    const dto = {
-      message: this.messageToSend
-    };
-
-    if (!this.validateAll()) {
+    if (this.messageToSend === '') {
       return;
     }
 
-    console.log(dto);
+    messagesWs.sendMessage(this.messageToSend);
     this.messageToSend = '';
+    this.children.message_input.updatePropValue('value', ' ');
     this.children.message_input.updatePropValue('value', '');
   }
 

@@ -16,7 +16,7 @@ const template = `
      </div>
   </div>
   <div class='message__content'>
-  ...
+    {{#components messages}} {{/components}}
   </div>
   <div class='message__input'>
     {{{ message_input }}}

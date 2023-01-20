@@ -50,6 +50,7 @@
     height: calc(100% - 120px);
     display: flex;
     flex-direction: column-reverse;
+    overflow: auto;
 }
 
 .message__input {

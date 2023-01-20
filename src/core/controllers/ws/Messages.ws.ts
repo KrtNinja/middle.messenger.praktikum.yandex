@@ -85,6 +85,7 @@ class MessageWS {
     this._chatId = options.chatId;
     this._token = options.token;
     this._ws = new WebSocket(`${urlWs}/${options.userId}/${options.chatId}/${options.token}`);
+    globalStore.setState({ messages: [] });
     this._addEvents();
   }
 
