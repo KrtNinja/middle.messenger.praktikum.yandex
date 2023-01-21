@@ -1,0 +1,40 @@
+.single-message {
+    display: flex;
+    padding: var(--s1) var(--s2)
+}
+
+.single-message--other {
+    justify-content: flex-start;
+}
+
+.single-message--mine {
+    justify-content: flex-end;
+}
+
+.single-message__content {
+    display: flex;
+    align-items: flex-end;
+    gap: var(--s1);
+    padding: var(--s1);
+    max-width: 450px;
+    color: white;
+    border-radius: 10px;
+}
+
+.single-message__content-text {
+    font-size: 14px;
+}
+
+.single-message__content-time {
+    font-size: 10px;
+    color: #ffffff80;
+    margin-bottom: -4px;
+}
+
+.single-message--other .single-message__content {
+    background-color: var(--bg-paper);
+}
+
+.single-message--mine .single-message__content {
+    background-color: var(--primary);
+}

@@ -3,16 +3,16 @@ enum METHODS {
   POST = 'POST',
   PUT = 'PUT',
   PATCH = 'PATCH',
-  DELETE = 'DELETE',
+  DELETE = 'DELETE'
 }
 
 type TRequestData = Record<string, string | number>;
 
-type TRequestOptions = {
-  method?: METHODS
-  headers?: Record<string, string>
-  timeout?: number
-  data?: unknown
+export type TRequestOptions = {
+  method?: METHODS;
+  headers?: Record<string, string>;
+  timeout?: number;
+  data?: unknown;
 };
 
 function queryStringify(data: TRequestData) {
@@ -22,34 +22,29 @@ function queryStringify(data: TRequestData) {
   }, '?');
 }
 
-class HTTPClient {
-  public get = (url: string, options = {}) => {
+export class Http {
+  public get(url: string, options = {}) {
     return this.request(url, { ...options, method: METHODS.GET });
-  };
+  }
 
-  public post = (url: string, options = {}) => {
+  public post(url: string, options = {}) {
     return this.request(url, { ...options, method: METHODS.POST });
-  };
+  }
 
-  public put = (url: string, options = {}) => {
+  public put(url: string, options = {}) {
     return this.request(url, { ...options, method: METHODS.PUT });
-  };
+  }
 
-  public patch = (url: string, options = {}) => {
+  public patch(url: string, options = {}) {
     return this.request(url, { ...options, method: METHODS.PATCH });
-  };
+  }
 
-  public delete = (url: string, options = {}) => {
+  public delete(url: string, options = {}) {
     return this.request(url, { ...options, method: METHODS.DELETE });
-  };
+  }
 
-  request = (url: string, options: TRequestOptions) => {
-    const {
-      method = METHODS.GET,
-      headers = {},
-      data,
-      timeout = 5000,
-    } = options;
+  async request(url: string, options: TRequestOptions) {
+    const { method = METHODS.GET, headers = {}, data, timeout = 5000 } = options;
 
     // Если метод GET и передана data, трансформировать data в query запрос
     const query = method === METHODS.GET ? queryStringify(data as TRequestData) : '';
@@ -75,14 +70,20 @@ class HTTPClient {
       xhr.onerror = reject;
       xhr.timeout = timeout;
       xhr.ontimeout = reject;
+      xhr.withCredentials = true;
 
       if (method === METHODS.GET || !data) {
         xhr.send();
-      } else {
-        xhr.send(JSON.stringify(data));
+        return;
       }
+      if (data instanceof FormData) {
+        xhr.send(data);
+        return;
+      }
+
+      xhr.send(JSON.stringify(data));
     });
-  };
+  }
 }
 
-export default new HTTPClient();
+export default new Http();

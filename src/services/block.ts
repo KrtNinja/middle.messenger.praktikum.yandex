@@ -38,7 +38,7 @@ class Block {
 
   private _init(): void {
     this.createResources();
-    this.eventBus.emit(this.EVENTS.FLOW_RENDER);
+    this.eventBus.emit(this.EVENTS.FLOW_CDM);
   }
 
   private createResources(): void {
@@ -50,13 +50,14 @@ class Block {
   }
 
   private _componentDidMount(): void {
+    this.dispatchMountComponent();
     Object.values(this.children).forEach(child => {
       child.dispatchMountComponent();
     });
   }
 
   public dispatchMountComponent(): void {
-    this.eventBus.emit(this.EVENTS.FLOW_CDM);
+    this.eventBus.emit(this.EVENTS.FLOW_RENDER);
   }
 
   public componentDidUpdate(oldProps?: TProps, newProps?: TProps) {
@@ -128,6 +129,10 @@ class Block {
     Object.assign(this.props, newProps);
   }
 
+  public getProps(): TProps {
+    return this.props;
+  }
+
   public getElement(): HTMLElement {
     return <HTMLElement>this.element;
   }
@@ -187,10 +192,27 @@ class Block {
 
     Object.values(this.children).forEach(child => {
       const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
-      (stub as HTMLElement).replaceWith(child.getElement());
+      (stub as HTMLElement)?.replaceWith(child.getElement());
     });
 
     return fragment.content;
+  }
+
+  public show() {
+    this.getElement().style.display = 'block';
+  }
+
+  public hide() {
+    this.getElement().style.display = 'none';
+  }
+
+  public destroy() {
+    this.element?.remove();
+    this.onDestroy();
+  }
+
+  public onDestroy(): void {
+    return;
   }
 }
 

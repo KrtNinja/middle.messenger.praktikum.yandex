@@ -3,13 +3,13 @@ import Handlebars from 'handlebars';
 const template = `<div class='home'>
   <ul class style='display: flex; gap: 10px; padding: 1rem'>
     <li>
-      <a href='/chats'>Чаты</a>
+      <a href='/messenger'>Чаты</a>
     </li>
     <li>
       <a href='/login'>Авторизация</a>
     </li>
     <li>
-      <a href='/signin'>Регистрация</a>
+      <a href='/sign-up'>Регистрация</a>
     </li>
     <li>
       <a href='/profile'>Профиль</a>

@@ -4,79 +4,64 @@ import Block from '../../services/block';
 import { LWInput } from '../../components/Input/Input';
 import { LWButton } from '../../components/Button/Button';
 import validator from '../../services/validator';
+import router from '../../router';
+import userController from '../../core/controllers/user/User.controller';
+import { globalStore } from '../../store/global.store';
+import { snackbar } from '../../services/snackbar';
 
-type TChangeableKeys =
-  | 'email'
-  | 'login'
-  | 'first_name'
-  | 'second_name'
-  | 'nickname'
-  | 'phone'
+type TChangeableKeys = 'email' | 'login' | 'first_name' | 'second_name' | 'nickname' | 'phone';
 
 class EditProfile extends Block {
-  public email = 'pochta@yandex.ru';
-  public login = 'ivanovivan';
-  public first_name = 'Иван';
-  public second_name = 'Иванов';
-  public nickname = 'BigVano';
-  public phone = '+79991234455';
-
   constructor() {
-    super('div', { events: { submit: (e: Event) => this.submitData(e)} });
+    super('div', { events: { submit: (e: Event) => this.submitData(e) } });
 
     this.setChildren({
       email: new LWInput({
         type: 'text',
         name: 'email',
         label: 'Почта',
-        value: this.email,
-        validateRule: validator.rules.email,
-        events: { onChange: event => this.onChangeValue('email', event.target.value) }
+        value: '',
+        validateRule: validator.rules.email
       }),
       login: new LWInput({
         type: 'text',
         name: 'login',
         label: 'Логин',
-        value: this.login,
-        validateRule: validator.rules.login,
-        events: { onChange: event => this.onChangeValue('login', event.target.value) }
+        value: '',
+        validateRule: validator.rules.login
       }),
       first_name: new LWInput({
         type: 'text',
         name: 'first_name',
         label: 'Имя',
-        value: this.first_name,
-        validateRule: validator.rules.name,
-        events: { onChange: event => this.onChangeValue('first_name', event.target.value) }
+        value: '',
+        validateRule: validator.rules.name
       }),
       second_name: new LWInput({
         type: 'text',
         name: 'second_name',
         label: 'Фамилия',
-        value: this.second_name,
-        validateRule: validator.rules.name,
-        events: { onChange: event => this.onChangeValue('second_name', event.target.value) }
+        value: '',
+        validateRule: validator.rules.name
       }),
       nickname: new LWInput({
         type: 'text',
         name: 'nickname',
         label: 'Никнейм',
-        value: this.nickname,
+        value: '',
         validateRule: {
           pattern: '',
           required: true,
           msg: 'Не может быть пустым'
-        },
-        events: { onChange: event => this.onChangeValue('nickname', event.target.value) }
+        }
       }),
       phone: new LWInput({
         type: 'phone',
         name: 'phone',
         label: 'Телефон',
         required: true,
-        value: this.phone,
-        validateRule: validator.rules.phone,
-        events: { onChange: event => this.onChangeValue('phone', event.target.value) }
+        value: '',
+        validateRule: validator.rules.phone
       }),
       save_button: new LWButton({
         buttonText: 'Сохранить'
@@ -86,13 +71,26 @@ class EditProfile extends Block {
         variant: 'text',
         color: 'primary',
         size: 'small',
-        events: { click: () => (document.location.href = '/profile')}
+        events: { click: () => router.go('/profile') }
       })
     });
   }
 
   render() {
     return template;
+  }
+
+  dispatchMountComponent() {
+    super.dispatchMountComponent();
+
+    globalStore.subscribe(({ user }) => {
+      this.updateChildValue('email', user?.email);
+      this.updateChildValue('login', user?.login);
+      this.updateChildValue('first_name', user?.first_name);
+      this.updateChildValue('second_name', user?.second_name);
+      this.updateChildValue('nickname', user?.display_name);
+      this.updateChildValue('phone', user?.phone);
+    });
   }
 
   private validateAll(): boolean {
@@ -105,27 +103,38 @@ class EditProfile extends Block {
     });
   }
 
-  private onChangeValue(prop: TChangeableKeys, value: string) {
-    this[prop] = value;
+  private updateChildValue(prop: TChangeableKeys, value: string) {
+    this.children[prop]?.updatePropValue('value', value);
   }
 
-  public submitData(event: Event) {
+  private getChildValue(prop: TChangeableKeys) {
+    return this.children[prop]?.getProps().value;
+  }
+
+  public async submitData(event: Event) {
     event.preventDefault();
 
     const dto = {
-      email: this.email,
-      login: this.login,
-      first_name: this.first_name,
-      second_name: this.second_name,
-      nickname: this.nickname,
-      phone: this.phone
+      email: this.getChildValue('email'),
+      login: this.getChildValue('login'),
+      first_name: this.getChildValue('first_name'),
+      second_name: this.getChildValue('second_name'),
+      display_name: this.getChildValue('nickname'),
+      phone: this.getChildValue('phone')
     };
 
     if (!this.validateAll()) {
       return;
     }
 
-    console.log(dto);
+    const data = await userController.changeUserProfile(dto);
+
+    if (!data) {
+      return;
+    }
+
+    snackbar.open('Данные успешно изменены', 'success');
+    router.go('/profile');
   }
 }
 

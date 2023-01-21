@@ -1,8 +1,10 @@
 import Handlebars from 'handlebars';
 
 const template = `
-  <div class='chat-item'>
-    <div class='chat-item__avatar'> </div>
+  <div class='chat-item {{{ classes }}}'>
+    <div class='chat-item__avatar'>
+      <img src='{{srcImg}}' alt='ava' width='60' height='60'>
+    </div>
     <div class='chat-item__info'>
       <div class='chat-item__info-title'>
         {{name}}

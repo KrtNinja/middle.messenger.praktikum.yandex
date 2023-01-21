@@ -42,8 +42,8 @@ export class Validator {
     }
   };
 
-  private isEmpty(value: string): boolean {
-    return value.length === 0;
+  private isEmpty(value: string | null): boolean {
+    return value == null || value.length === 0;
   }
 
   public validate(rule: IRule, value: string): IReturnValid {

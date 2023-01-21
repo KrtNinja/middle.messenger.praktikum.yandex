@@ -11,6 +11,7 @@ const template = `{{#>Layout}}
     {{#components chats}} {{/components}}
     </div>
     <div class='chats__panel_footer'>
+      {{{ add_new_chat }}}
       {{{ profile_button }}}
     </div>
   </div>

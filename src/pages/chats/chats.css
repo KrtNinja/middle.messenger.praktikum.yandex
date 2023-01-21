@@ -22,6 +22,7 @@
 
 .chats__panel_list {
     height: calc(100% - 120px);
+    overflow: auto;
 }
 
 .chats__panel_footer {

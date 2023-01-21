@@ -14,6 +14,13 @@
     justify-content: space-between;
 }
 
+.message__header-action {
+    display: flex;
+    flex-direction: row;
+    gap: var(--s1);
+    align-items: center;
+}
+
 .message__header-person {
     display: flex;
     align-items: center;
@@ -21,13 +28,18 @@
 }
 
 .message__header-person_avatar {
-    min-width: 50px;
-    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
     background-color: var(--primary50);
     border-radius: 25px;
+    position: relative;
+    overflow: hidden;
 }
 
-.message__header-action button, .message__input button {
+.message__input button {
     border-radius: 12px;
     font-size: 20px;
     height: 25px;
@@ -38,6 +50,7 @@
     height: calc(100% - 120px);
     display: flex;
     flex-direction: column-reverse;
+    overflow: auto;
 }
 
 .message__input {
